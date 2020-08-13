@@ -1,0 +1,48 @@
+:root {
+  --main-theme: #68b0ab;
+  --sub-theme: #8fc0a9;
+  --third-theme: #c8d5b9;
+  --forth-theme: #faf3dd;
+}
+
+html {
+  height: 100%;
+}
+
+body {
+  height: 100%;
+  margin: 0;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+body::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide scrollbar for IE, Edge and Firefox */
+body {
+  -ms-overflow-style: none;
+  /* IE and Edge */
+  scrollbar-width: none;
+  /* Firefox */
+}
+
+.main-theme {
+  background: var(--main-theme);
+  color: white;
+}
+
+.sub-theme {
+  background: var(--sub-theme);
+  color: white;
+}
+
+.third-theme {
+  background: var(--third-theme);
+  color: #222222;
+}
+
+.forth-theme {
+  background: var(--forth-theme);
+  color: #222222;
+}
