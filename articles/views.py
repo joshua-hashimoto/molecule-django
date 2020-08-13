@@ -102,7 +102,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
     form_class = ArticleForm
     template_name = 'articles/article_new.html'
     success_url = reverse_lazy('articles:article_list')
-    login_url = 'admin'
+    login_url = 'articles:article_list'
 
     def form_valid(self, form):
         """
@@ -129,7 +129,7 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
     model = Article
     form_class = ArticleForm
     template_name = 'articles/article_edit.html'
-    login_url = 'admin'
+    login_url = 'articles:article_list'
 
     def form_valid(self, form):
         """
@@ -165,7 +165,7 @@ class ArticleDeleteView(LoginRequiredMixin, DeleteView):
     model = Article
     template_name = 'articles/article_detail.html'
     success_url = reverse_lazy('articles:article_list')
-    login_url = 'admin'
+    login_url = 'articles:article_list'
 
     def delete(self, request, *args, **kwargs):
         """
