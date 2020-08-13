@@ -23,6 +23,7 @@ martor = "*"
 django-environ = "*"
 django-sass = "*"
 beautifulsoup4 = "*"
+mysqlclient = "*"
 
 [requires]
 python_version = "3.8"
