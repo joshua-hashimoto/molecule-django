@@ -26,7 +26,7 @@ class ArticleListView(ListView):
     """
     template_name = 'articles/article_home.html'
     context_object_name = 'article_list'
-    paginate_by = 28
+    paginate_by = 20
     form_class = ArticleFilter
 
     def get_queryset(self):
