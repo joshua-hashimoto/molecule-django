@@ -1,0 +1,28 @@
+[[source]]
+name = "pypi"
+url = "https://pypi.org/simple"
+verify_ssl = true
+
+[dev-packages]
+
+[packages]
+django = "*"
+psycopg2-binary = "*"
+django-widget-tweaks = "*"
+pillow = "*"
+django-debug-toolbar = "*"
+django-admin-honeypot = "*"
+whitenoise = "*"
+gunicorn = "*"
+django-filter = "*"
+django-cleanup = "*"
+markdown = "*"
+dj3-cloudinary-storage = "*"
+python-magic = "*"
+martor = "*"
+django-environ = "*"
+django-sass = "*"
+beautifulsoup4 = "*"
+
+[requires]
+python_version = "3.8"
