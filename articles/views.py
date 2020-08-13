@@ -1,5 +1,4 @@
 from django.conf import settings
-from django.contrib.auth.mixins import LoginRequiredMixin
 from django.urls import reverse_lazy
 from django.shortcuts import HttpResponseRedirect
 from django.views.generic import ListView, DetailView
@@ -10,6 +9,7 @@ import cloudinary
 from .models import Article
 from .filter import ArticleFilter
 from .forms import ArticleForm
+from .mixin import AccessPermissionToUsersMixin
 
 
 class ArticleListView(ListView):
@@ -85,7 +85,7 @@ class ArticleDetailView(DetailView):
     context_object_name = 'article'
 
 
-class ArticleCreateView(LoginRequiredMixin, CreateView):
+class ArticleCreateView(AccessPermissionToUsersMixin, CreateView):
     """
     Passes form class for creating new object.
     Login is required.
@@ -95,14 +95,11 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         form_class (ArticleForm): set custom Forms
         template_name (str): a path to template that is responsible to render objects
         success_url (str): a named url to go to after creation is successful
-        login_url (str): a django named path to login page.
-                         needed because this view is login required by LoginRequiredMixin
     """
     model = Article
     form_class = ArticleForm
     template_name = 'articles/article_new.html'
     success_url = reverse_lazy('articles:article_list')
-    login_url = 'articles:article_list'
 
     def form_valid(self, form):
         """
@@ -114,7 +111,7 @@ class ArticleCreateView(LoginRequiredMixin, CreateView):
         return super().form_valid(form)
 
 
-class ArticleUpdateView(LoginRequiredMixin, UpdateView):
+class ArticleUpdateView(AccessPermissionToUsersMixin, UpdateView):
     """
     Passes form class for creating new object.
     Login is required.
@@ -123,13 +120,10 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
         model (Article): target model to fetch data from.
         form_class (ArticleForm): set custom Forms
         template_name (str): a path to template that is responsible to render objects
-        login_url (str): a django named path to login page.
-                         needed because this view is login required by LoginRequiredMixin
     """
     model = Article
     form_class = ArticleForm
     template_name = 'articles/article_edit.html'
-    login_url = 'articles:article_list'
 
     def form_valid(self, form):
         """
@@ -149,7 +143,7 @@ class ArticleUpdateView(LoginRequiredMixin, UpdateView):
         return reverse_lazy('articles:article_detail', kwargs={'pk': self.object.pk})
 
 
-class ArticleDeleteView(LoginRequiredMixin, DeleteView):
+class ArticleDeleteView(AccessPermissionToUsersMixin, DeleteView):
     """
     Delete an existing object.
     Login is required.
@@ -159,13 +153,10 @@ class ArticleDeleteView(LoginRequiredMixin, DeleteView):
         template_name (str): a path to template that is responsible to render objects.
                              for the moment this is a dummy sense delete does not have a template
         success_url (str): a named url to go to after creation is successful
-        login_url (str): a django named path to login page.
-                         needed because this view is login required by LoginRequiredMixin
     """
     model = Article
     template_name = 'articles/article_detail.html'
     success_url = reverse_lazy('articles:article_list')
-    login_url = 'articles:article_list'
 
     def delete(self, request, *args, **kwargs):
         """
