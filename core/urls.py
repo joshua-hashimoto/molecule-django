@@ -14,7 +14,7 @@ urlpatterns = [
     path('api/uploader/', MarkdownImageUploader.as_view(),
          name='markdown_uploader_page'),
     # local apps
-    path('', include('articles.urls')),
+    path('molecule/', include('articles.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:
