@@ -8,7 +8,7 @@ from core.additional.custom_image_uploader import MarkdownImageUploader
 urlpatterns = [
     # django admin
     path('admin/', include('admin_honeypot.urls', namespace='admin_honeypot')),
-    path('headquarters/', admin.site.urls, name="admin"),
+    path('headquarters/', admin.site.urls),
     # third party
     path('martor/', include('martor.urls')),
     path('api/uploader/', MarkdownImageUploader.as_view(),
