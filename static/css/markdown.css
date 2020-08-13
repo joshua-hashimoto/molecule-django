@@ -1,0 +1,118 @@
+@charset "UTF-8";
+.markdown .toc > ul {
+  position: relative;
+  display: flex;
+  border-radius: 3px;
+  border-width: 1px;
+  border-style: solid;
+  border-color: transparent;
+  font-style: italic;
+  border-radius: 20px;
+  font-weight: 500;
+  list-style-type: none;
+}
+
+.markdown .toc ul > li {
+  list-style: none;
+}
+
+.markdown .toc a {
+  color: #666;
+  text-decoration: none;
+}
+
+.markdown table {
+  max-width: 100%;
+  width: 100%;
+  border-collapse: collapse;
+  border-spacing: 0;
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.markdown table th,
+.markdown table td {
+  padding: 5px 10px;
+  vertical-align: top;
+  color: var(--text-color);
+  text-align: start;
+  border: solid 1px var(--bg-color);
+}
+
+.markdown pre,
+.markdown code {
+  padding: 0;
+}
+
+.markdown pre code {
+  font-size: 0.875rem;
+  padding: 2%;
+}
+
+.markdown blockquote {
+  padding-left: 1.875rem;
+  margin: 0 0 1.875rem 1.875rem;
+  border-left: solid 3px #474d54;
+  padding-left: 30px;
+  margin-top: 35px;
+  color: #9da2a6;
+}
+
+.markdown article {
+  position: relative;
+  display: flex;
+  padding: 16px 16px 16px 12px;
+  border-radius: 3px;
+  border-width: 2px;
+  border-style: solid;
+  border-color: transparent;
+  background: rgba(235, 236, 237, 0.3);
+  margin: 50px 0 50px;
+  font-style: italic;
+  border-radius: 20px;
+  font-weight: 500;
+  /* color: var(--text-color); */
+}
+
+.markdown article:before {
+  content: "🤔";
+  margin-top: 10px;
+  padding: 5px 8px;
+  font-weight: normal;
+  position: absolute;
+  top: -2.2rem;
+  display: block;
+  font-size: 30px;
+  font-style: normal;
+}
+
+.markdown hr {
+  background: #474d54;
+}
+
+.markdown em {
+  color: red;
+  font-style: normal;
+}
+
+@media (min-width: 768px) {
+  .markdown img {
+    display: flex;
+    width: 90%;
+    box-shadow: var(--common) -shadow;
+    transition: all 0.2s ease-out 0s;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .markdown img {
+    display: flex;
+    width: 100%;
+    box-shadow: var(--common) -shadow;
+    transition: all 0.2s ease-out 0s;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
