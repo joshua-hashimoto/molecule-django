@@ -59,6 +59,7 @@ INSTALLED_APPS = [
     'django_sass',
     # local
     'users.apps.UsersConfig',
+    'tags.apps.TagsConfig',
     # third party that is recommended to be in the end
     'django_cleanup.apps.CleanupConfig',
 ]
