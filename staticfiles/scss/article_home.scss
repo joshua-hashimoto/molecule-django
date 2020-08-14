@@ -1,0 +1,37 @@
+#home {
+    margin-top: 5%;
+    margin-bottom: 5%;
+
+    li {
+        list-style-type: none;
+    }
+
+    .article-filter {
+        .article-count-section {
+            margin-bottom: 5%;
+
+            .count-help-text {
+                padding-left: 5px;
+                padding-bottom: 4px;
+            }
+        }
+        .article-filter-section {
+            .filter-tags {
+                padding: 0;
+                text-align: center;
+
+                input[type="checkbox"] {
+                    display: none;
+                }
+
+                input[type="checkbox"]:checked + label {
+                    border-color: var(--main-theme);
+                    color: var(--main-theme);
+                }
+            }
+        }
+    }
+
+    .article-list {
+    }
+}

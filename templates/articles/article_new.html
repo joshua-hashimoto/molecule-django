@@ -1,0 +1,51 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+{% block keywords %}
+{{ article.keywords }}
+{% endblock keywords %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/article_form.css' %}">
+<link rel="stylesheet" href="{% static 'css/markdown.css' %}">
+{% endblock style %}
+
+
+{% block title %}
+{{ block.super }}
+{% endblock title %}
+
+
+{% block content %}
+<div class="uk-container-small uk-align-center uk-padding">
+    <div class="article-new-container">
+        {% for field, errors in form.errors.items %}
+                {% for error in errors %}
+                    <div class="uk-alert-danger" uk-alert>
+                        <a class="uk-alert-close" uk-close></a>
+                        <p>{{ field | upper }} FIELD ERROR.</p>
+                        <p>{{ error }}</p>
+                    </div>
+                {% endfor %}
+        {% endfor %}
+        <form action="" method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+
+            {% include 'articles/article_base_form.html' %}
+
+            <div class="uk-flex uk-flex-around uk-padding">
+                <a href="{% url 'articles:article_list' %}" class="uk-button uk-button-danger">cancel</a>
+                <button class="uk-button main-theme" type="submit" >save</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock content %}
+
+
+{% block js %}
+<script src="{% static 'js/filterTags.js' %}"></script>
+<script src="{% static 'js/filterRelatedArticles.js' %}"></script>
+{% endblock js %}

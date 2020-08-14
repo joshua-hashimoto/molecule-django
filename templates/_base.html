@@ -1,0 +1,64 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="icon" href="{% static 'img/molecule-logo.svg' %}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="keywords" content="{% block keywords %}プログラミング{% endblock keywords %}">
+    <!-- martor CSS -->
+    <link href="{% static 'plugins/css/ace.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+    <link href="{% static 'plugins/css/semantic.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+    <link href="{% static 'plugins/css/resizable.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+    <link href="{% static 'martor/css/martor.min.css' %}" type="text/css" media="all" rel="stylesheet" />
+    <!-- UIkit CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/css/uikit.min.css" />
+    <!-- local -->
+    <link rel="stylesheet" href="{% static 'css/base.css' %}">
+    <link rel="stylesheet" href="{% static 'css/header.css' %}">
+    <!-- jQuery for martor -->
+    <script type="text/javascript" src="{% static 'plugins/js/jquery.min.js' %}"></script>
+    <!-- for datetime picker -->
+    <script type="text/javascript" src="https://code.jquery.com/ui/1.12.0/jquery-ui.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jquery-datetimepicker@2.5.20/build/jquery.datetimepicker.full.min.js"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jquery-datetimepicker@2.5.20/jquery.datetimepicker.css">
+    {% block style %}
+    {% endblock style %}
+    <title>
+        {% block title %}
+            Molecule
+        {% endblock title %}
+    </title>
+</head>
+<body>
+    {% include 'widgets/header.html' %}
+    <div class="molecule-body">
+        <div class="uk-container">
+            {% block content %}
+            {% endblock content %}
+        </div>
+    </div>
+
+    <!-- martor JS -->
+    <script type="text/javascript" src="{% static 'plugins/js/ace.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/js/semantic.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/js/mode-markdown.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/js/ext-language_tools.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/js/theme-github.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/js/typo.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/js/spellcheck.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/js/highlight.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/js/resizable.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'plugins/js/emojis.min.js' %}"></script>
+    <script type="text/javascript" src="{% static 'martor/js/martor.min.js' %}"></script>
+    <!-- UIkit JS -->
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/uikit@3.5.5/dist/js/uikit-icons.min.js"></script>
+    <!-- local -->
+    <script src="{% static 'js/base.js' %}"></script>
+    <script src="{% static 'js/dateTimePicker.js' %}"></script>
+    {% block js %}
+    {% endblock js %}
+</body>
+</html>

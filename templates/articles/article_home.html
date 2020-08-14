@@ -1,0 +1,78 @@
+{% extends '_base.html' %}
+{% load static %}
+{% load widget_tweaks %}
+
+
+{% block keywords %}
+{% endblock keywords %}
+
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'css/article_home.css' %}">
+<link rel="stylesheet" href="{% static 'css/article_accordion.css' %}">
+<link rel="stylesheet" href="{% static 'css/markdown.css' %}">
+{% endblock style %}
+
+
+{% block title %}
+{{ block.super }}
+{% endblock title %}
+
+
+{% block content %}
+<div id="home" class="uk-grid-divider uk-flex-center" uk-grid>
+    <div class="article-filter uk-width-1-3@m">
+        <div class="article-count-section uk-flex uk-flex-bottom uk-flex-center">
+            <p class="uk-h2 uk-padding-remove uk-margin-remove">{{ article_list.count }}</p>
+            <p class="count-help-text">articles...</p>
+        </div>
+        <div class="article-filter-section">
+            <form id="search-form" action="" method="get">
+                <div class="uk-search uk-search-default uk-width-expand uk-box-shadow-small">
+                    <span uk-search-icon></span>
+                    {{ filter.form.search }}
+                </div>
+                <h4>Tags</h4>
+                <ul id="id_tags" class="filter-tags uk-list uk-overflow-hidden uk-overflow-auto uk-width-expand">
+                    {% for tag in filter.form.tags %}
+                        <li>
+                            {{ tag.tag }}
+                            <label
+                                class="uk-button uk-button-default uk-button-small uk-box-shadow-small uk-width-expand uk-text-truncate"
+                                for="{{ tag.id_for_label }}">
+                                {{ tag.choice_label }}
+                            </label>
+                        </li>
+                    {% endfor %}
+                </ul>
+            </form>
+        </div>
+    </div>
+
+    <div class="article-list uk-width-2-3">
+        <ul uk-accordion>
+            {% for article in article_list %}
+                {% include 'articles/article_accordion.html' with article=article %}
+            {% empty %}
+                <div class="uk-width-1-1">
+                    <div class="uk-tile uk-tile-default uk-padding-small uk-box-shadow-small uk-text-center">
+                        <h3>NO ARTICLES</h3>
+                    </div>
+                </div>
+            {% endfor %}
+        </ul>
+        {% if paginator.page_range %}
+            {% include 'widgets/pagination.html' %}
+        {% endif %}
+    </div>
+</div>
+{% endblock content %}
+
+
+
+{% block js %}
+<link rel="stylesheet" href="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/styles/dracula.min.css">
+<script src="//cdn.jsdelivr.net/gh/highlightjs/cdn-release@9.16.2/build/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad();</script>
+<script src="{% static 'js/articleHome.js' %}"></script>
+{% endblock js %}

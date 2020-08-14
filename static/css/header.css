@@ -1,0 +1,8 @@
+.molecule-header .logo-text {
+  color: var(--main-theme);
+}
+
+.molecule-header .add-icon-button {
+  background-color: var(--main-theme);
+  color: white;
+}
