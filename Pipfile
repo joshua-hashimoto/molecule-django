@@ -20,10 +20,9 @@ markdown = "*"
 dj3-cloudinary-storage = "*"
 python-magic = "*"
 martor = "*"
-django-environ = "*"
 django-sass = "*"
 beautifulsoup4 = "*"
-mysqlclient = "*"
+dj-database-url = "*"
 
 [requires]
 python_version = "3.8"
