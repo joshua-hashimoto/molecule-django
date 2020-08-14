@@ -82,30 +82,28 @@ orsa [carmen](http://deammare.org/). Accendit voluit, tectae et corpus gratus
 herbas optata. Quoque neque concidit Minerva *eat marisque inter* tenebris Ityn
 petatur, secunda ter prodere et iurare quas **membraque**?
 
-    if (cpuUnc(5 * checksum(boot_iso, -4, service_dot))) {
-        switchMemory = heap;
-        fileModemCycle(peripheral - tiff_file_tcp, alert(1));
-        intellectual.prebinding_software_reality = 61 + nasVolume;
-    }
-    mnemonic_abend.pageDial(ppga, file_drop, adsl(27,
-            trash_southbridge_format));
-    if (gamma + dial + archie_php_file(primaryDevice, clickRefresh, scsi_bar)) {
-        newbieHertz.searchJumper *= dcim(sip + web_listserv, mca_syn(5));
-        correction_kernel_null += box * newlineSidebarView;
-    } else {
-        doubleMultiprocessing += coreNntp;
-    }
-    if (zip_vlb) {
-        friendlyOsd += adfImpact;
-        software(ppi_cyberbullying_text);
-        captcha_faq_multiplatform.memoryDualWeb += status_faq_file;
-    }
+```js
+if (cpuUnc(5 * checksum(boot_iso, -4, service_dot))) {
+    switchMemory = heap;
+    fileModemCycle(peripheral - tiff_file_tcp, alert(1));
+    intellectual.prebinding_software_reality = 61 + nasVolume;
+}
+mnemonic_abend.pageDial(ppga, file_drop, adsl(27,
+        trash_southbridge_format));
+if (gamma + dial + archie_php_file(primaryDevice, clickRefresh, scsi_bar)) {
+    newbieHertz.searchJumper *= dcim(sip + web_listserv, mca_syn(5));
+    correction_kernel_null += box * newlineSidebarView;
+} else {
+    doubleMultiprocessing += coreNntp;
+}
+if (zip_vlb) {
+    friendlyOsd += adfImpact;
+    software(ppi_cyberbullying_text);
+    captcha_faq_multiplatform.memoryDualWeb += status_faq_file;
+}
+```
 
 Quid est horrentia, feri duplex Byblis, sine si. Ferebat hunc. Harenam pervenit.
 Non tenent corpora inerti; pulchroque est mortale citharam vitiantes. Parens
 genae seduxit videri.
-
-<article>
-Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.
-</article>
 ````
