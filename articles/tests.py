@@ -222,3 +222,18 @@ class ArticleViewTestCase(TestCase):
         self.assertEqual(response.status_code, status_code.OK)
         self.assertFormError(response, 'form', 'title',
                              'この Title を持った Article が既に存在します。')
+
+    def test_delete_modal_can_delete(self):
+        self.client.login(username='testuser', password='testuser1234')
+        response = self.client.post(
+            reverse('articles:article_delete', kwargs={'pk': self.second_article.pk}))
+        self.assertEqual(response.status_code, status_code.FOUND)
+        self.assertRedirects(response, reverse('articles:article_list'))
+        no_response = self.client.get(reverse(
+            'articles:article_detail', kwargs={'pk': self.second_article.pk}))
+        self.assertEqual(no_response.status_code, status_code.NOT_FOUND)
+        response = self.client.get(reverse('articles:article_list'))
+        self.assertContains(response, 'example')
+        self.assertNotContains(response, 'example2')
+        # check if tag is rendered to template
+        self.assertContains(response, 'example tag')
