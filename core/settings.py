@@ -181,8 +181,9 @@ DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.VideoMediaCloudinaryStorage'
 
 # martor
 MARTOR_ENABLE_CONFIGS = {
-    'imgur': 'true',     # to enable/disable imgur uploader/custom uploader.
-    'mention': 'true',   # to enable/disable mention
+    'emoji': 'true',        # to enable/disable emoji icons.
+    'imgur': 'true',        # to enable/disable imgur/custom uploader.
+    'mention': 'false',     # to enable/disable mention
     # to include/revoke jquery (require for admin default django)
     'jquery': 'true',
     'living': 'false',      # to enable/disable live updates in preview
