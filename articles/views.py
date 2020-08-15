@@ -10,6 +10,7 @@ from .models import Article
 from .filter import ArticleFilter
 from .forms import ArticleForm
 from .mixin import AccessPermissionToUsersMixin
+from comments.forms import CommentCreateForm
 
 
 class ArticleListView(ListView):
@@ -83,6 +84,11 @@ class ArticleDetailView(DetailView):
     model = Article
     template_name = 'articles/article_detail.html'
     context_object_name = 'article'
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['comment_form'] = CommentCreateForm(self.request.POST or None)
+        return context
 
 
 class ArticleCreateView(AccessPermissionToUsersMixin, CreateView):

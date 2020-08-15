@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'tags.apps.TagsConfig',
     'articles.apps.ArticlesConfig',
+    'comments.apps.CommentsConfig',
     # third party that is recommended to be in the end
     'django_cleanup.apps.CleanupConfig',
 ]
