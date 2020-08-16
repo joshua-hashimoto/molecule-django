@@ -31,6 +31,15 @@ class CommentModelTestCase(TestCase):
         queryset = Comment.objects.all()
         self.assertEqual(queryset.count(), 1)
 
+    def test_model_create_inactive_comment(self):
+        queryset = Comment.objects.all()
+        Comment.objects.create(
+            article=self.article,
+            name='unknown',
+            comment='comment example 2',
+            is_active=False,)
+        self.assertEqual(queryset.count(), 1)
+
     def test_comment_related_to_article(self):
         Comment.objects.create(
             article=self.article,
