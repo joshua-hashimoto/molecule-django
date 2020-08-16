@@ -16,6 +16,12 @@
         <div class="uk-navbar-right">
             {% if user.is_authenticated %}
                 <a href="{% url 'articles:article_new' %}" class="add-icon-button uk-icon-button" uk-icon="plus"></a>
+            {% else %}
+                <ul class="uk-navbar-nav">
+                    <li>
+                        <a href="https://joshua-hashimoto.github.io/">About</a>
+                    </li>
+                </ul>
             {% endif %}
             <div class="uk-text-meta uk-padding">© Joshua Hashimoto. 2020</div>
         </div>
