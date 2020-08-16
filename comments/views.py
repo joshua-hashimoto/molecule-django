@@ -12,9 +12,27 @@ from articles.models import Article
 
 class CommentCreateView(View):
     """
+    a view to create comments
     """
 
     def post(self, request):
+        """
+        a django default method called on a post request to the view.
+        when the comment is created email will be send to the blog creator.
+        the flow is the flowing,
+        1. check if the article_id exists in the data.
+           if not, send a error message and redirect to home page
+        2. check if the form is valid.
+           if not send a error message and redirect to detail page with the article_id
+        3. check if the value of 'verify' is correct.
+           if not send a error message and redirect to detail page with the article_id
+        4. get the article object using the article_id
+        5. execute form.save(commit=False)
+        6. attach article to comment
+        7. execute form.save()
+        8. send email to creator of the blog(not post)
+        9. redirect to detail page with the article_id
+        """
         article_id = request.POST.get('article_id')
         if not article_id:
             messages.error(request, '問題が発生しました。もう一度お試しください :(')
@@ -38,6 +56,10 @@ class CommentCreateView(View):
         return redirect('articles:article_detail', pk=article_id)
 
     def send_email_notification(self, comment, article):
+        """
+        method to send email.
+        for message content we load the template txt file.
+        """
         subject = 'You have a new comment'
         context_data = {
             'article': article,
