@@ -1,0 +1,12 @@
+{% extends '_base.html' %}
+
+{% block title %}
+Forbidden | {{ block.super }}
+{% endblock title %}
+
+{% block content %}
+<h1 class="uk-heading-divider">403 Forbidden</h1>
+<div class="uk-margin">
+    <a href="{% url 'articles:article_list' %}" class="uk-button uk-button-primary">Back to Home</a>
+</div>
+{% endblock content %}

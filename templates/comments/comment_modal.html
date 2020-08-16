@@ -1,0 +1,35 @@
+{% load widget_tweaks %}
+
+{% comment %}
+コメントボタン
+{% endcomment %}
+<button class="uk-button uk-button-default uk-margin-small-right" type="submit" uk-toggle="target: #comment-modal">コメントする</button>
+
+{% comment %}
+コメントモーダル
+{% endcomment %}
+<div id="comment-modal" uk-modal>
+    <div class="uk-modal-dialog uk-modal-body">
+        <form method="post" action="{% url 'comments:comment_new' %}">
+            {% csrf_token %}
+            <input type="hidden" name="article_id" value="{{ article.pk }}">
+            <div class="uk-margin">
+                コメント認証:
+                {{ form.verify }}
+            </div>
+            <div class="uk-margin">
+                {{ form.name.label }}:
+                {{ form.name | add_class:"uk-input" }}
+            </div>
+            <div class="uk-margin">
+                {{ form.comment.label }}:
+                <span>*{{ form.comment.help_text }}</span>
+                {{ form.comment | add_class:"uk-textarea" }}
+            </div>
+            <div class="uk-flex uk-flex-between">
+                <button class="uk-button uk-button-danger uk-modal-close" type="button">キャンセル</button>
+                <button class="uk-button uk-button-primary main-theme" type="submit">コメント</button>
+            </div>
+        </form>
+    </div>
+</div>

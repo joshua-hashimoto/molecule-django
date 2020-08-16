@@ -1,0 +1,10 @@
+{% if messages %}
+    <div class="uk-flex uk-flex-center">
+        {% for message in messages %}
+            <div class="uk-width-1-3 {% if message.tags %} {{ message.tags }} {% endif %}" uk-alert>
+                <a class="uk-alert-close" uk-close></a>
+                <p>{{ message }}</p>
+            </div>
+        {% endfor %}
+    </div>
+{% endif %}

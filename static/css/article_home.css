@@ -1,0 +1,31 @@
+#home {
+  margin-top: 5%;
+  margin-bottom: 5%;
+}
+
+#home li {
+  list-style-type: none;
+}
+
+#home .article-filter .article-count-section {
+  margin-bottom: 5%;
+}
+
+#home .article-filter .article-count-section .count-help-text {
+  padding-left: 5px;
+  padding-bottom: 4px;
+}
+
+#home .article-filter .article-filter-section .filter-tags {
+  padding: 0;
+  text-align: center;
+}
+
+#home .article-filter .article-filter-section .filter-tags input[type="checkbox"] {
+  display: none;
+}
+
+#home .article-filter .article-filter-section .filter-tags input[type="checkbox"]:checked + label {
+  border-color: var(--main-theme);
+  color: var(--main-theme);
+}

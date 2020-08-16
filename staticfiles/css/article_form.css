@@ -1,0 +1,4 @@
+input[type="checkbox"]:checked + label {
+  border-color: var(--main-theme);
+  color: var(--main-theme);
+}

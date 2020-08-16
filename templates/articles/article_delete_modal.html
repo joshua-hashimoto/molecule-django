@@ -1,0 +1,25 @@
+<a href="" class="uk-button uk-button-danger" uk-toggle="target: #delete-modal">delete</a>
+
+<!-- This is the modal -->
+<div id="delete-modal" uk-modal>
+    <div class="uk-modal-dialog">
+        <button class="uk-modal-close-default" type="button" uk-close></button>
+        <div class="uk-modal-header">
+            <h2 class="uk-modal-title uk-text-danger">Delete</h2>
+        </div>
+        <div class="uk-modal-body">
+            <p>Are you sure you want to delete post {{ article.title }}</p>
+        </div>
+        <div class="uk-modal-footer uk-flex uk-flex-around">
+            <div>
+                <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
+            </div>
+            <div>
+                <form action="{% url 'articles:article_delete' pk=article.pk %}" method="post">
+                    {% csrf_token %}
+                    <button class="uk-button uk-button-danger" type="submit">delete</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
