@@ -2,16 +2,18 @@
 {% load humanize %}
 {% load martortags %}
 
-<article class="uk-comment uk-comment-primary">
-    <header class="uk-comment-header">
-        <div class="uk-width-expand uk-flex uk-flex-between">
-            <h4 class="uk-comment-title">{{ comment.name }}</h4>
-            <time class="uk-text-meta open-text" datetime="{{ comment.timestamp | date:'Y-m-d' }}">
-                {{ comment.timestamp | naturalday }}
-            </time>
+<li class="uk-box-shadow-small">
+    <article class="uk-comment uk-padding">
+        <header class="uk-comment-header">
+            <div class="uk-width-expand uk-flex uk-flex-between">
+                <h4 class="uk-comment-title">{{ comment.name }}</h4>
+                <time class="uk-text-meta open-text" datetime="{{ comment.timestamp | date:'Y-m-d' }}">
+                    {{ comment.timestamp | naturalday }}
+                </time>
+            </div>
+        </header>
+        <div class="markdown" class="uk-comment-body">
+            {{ comment.comment | safe_markdown }}
         </div>
-    </header>
-    <div class="markdown" class="uk-comment-body">
-        {{ comment.comment | safe_markdown }}
-    </div>
-</article>
+    </article>
+</li>
