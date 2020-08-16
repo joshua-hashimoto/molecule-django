@@ -54,6 +54,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'tags.apps.TagsConfig',
     'articles.apps.ArticlesConfig',
+    'comments.apps.CommentsConfig',
     # third party that is recommended to be in the end
     'django_cleanup.apps.CleanupConfig',
 ]
@@ -159,6 +160,16 @@ else:
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 
+# email settings
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+DEFAULT_FROM_EMAIL = 'notification@molecule.com'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
+
 # message framework config
 from django.contrib.messages import constants as messages
 MESSAGE_TAGS = {
@@ -223,6 +234,7 @@ if ENVIRONMENT == 'production':
     SESSION_COOKIE_SECURE = True
     CSRF_COOKIE_SECURE = True
     SECURE_PROXY_SSL_HEADER = ('HTTP_X_FORWARDED_PROTO', 'https',)
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 # Heroku
 import dj_database_url

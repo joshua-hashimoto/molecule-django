@@ -2,6 +2,7 @@
 {% load static %}
 {% load humanize %}
 
+
 {% block keywords %}
 {{ article.keywords }}
 {% endblock keywords %}
@@ -37,6 +38,17 @@
         <h2>{{ article.title }}</h2>
     </div>
     {% include 'articles/article_detail_content.html' with article=article %}
+
+    <section class="uk-section">
+        <h4>コメント</h4>
+        <hr>
+        {% include 'comments/comment_modal.html' with form=comment_form article=article %}
+        <ul class="uk-comment-list">
+            {% for comment in article.comments.all %}
+                {% include 'comments/comment_cell.html' with comment=comment %}
+            {% endfor %}
+        </ul>
+    </section>
 </div>
 {% endblock content %}
 

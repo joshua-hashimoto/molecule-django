@@ -1,0 +1,5 @@
+You got a new comment on article "{{ article.title}}"
+
+Commenter: {{ comment.name }}
+
+{{ comment.comment }}
