@@ -206,7 +206,7 @@ class Article(CoreModel):
     def get_markdown(self):
         """
         return a cleaned html.
-        in case there is a markdown we use markdown to convert them to html.
+        in case there is a markdown we use markdown package to convert them to html.
 
         Returns:
             str: string of safe html
