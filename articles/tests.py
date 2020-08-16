@@ -1,4 +1,4 @@
-from http import HTTPStatus as status_code
+from http import HTTPStatus as status
 
 from django.contrib.auth import get_user_model
 from django.test import TestCase, Client
@@ -99,7 +99,7 @@ class ArticleViewTestCase(TestCase):
     def test_article_list_view_for_logged_in_user(self):
         self.client.login(username='testuser', password='testuser1234')
         response = self.client.get(reverse('articles:article_list'))
-        self.assertEqual(response.status_code, status_code.OK)
+        self.assertEqual(response.status_code, status.OK)
         self.assertContains(response, 'example')
         self.assertContains(response, 'example2')
         # logged in user can see the unpublished article
@@ -115,7 +115,7 @@ class ArticleViewTestCase(TestCase):
     def test_article_list_view_for_logged_out_user(self):
         self.client.logout()
         response = self.client.get(reverse('articles:article_list'))
-        self.assertEqual(response.status_code, status_code.OK)
+        self.assertEqual(response.status_code, status.OK)
         self.assertContains(response, 'example')
         self.assertContains(response, 'example2')
         # check if tag is rendered to template
@@ -129,7 +129,7 @@ class ArticleViewTestCase(TestCase):
         self.client.logout()
         response = self.client.get(
             reverse('articles:article_detail', kwargs={'pk': self.article.pk}))
-        self.assertEqual(response.status_code, status_code.OK)
+        self.assertEqual(response.status_code, status.OK)
         self.assertContains(response, 'example')
         self.assertTemplateUsed(response, 'articles/article_detail.html')
         self.assertTemplateUsed(
@@ -140,14 +140,14 @@ class ArticleViewTestCase(TestCase):
     def test_display_article_create_view(self):
         self.client.login(username='testuser', password='testuser1234')
         response = self.client.get(reverse('articles:article_new'))
-        self.assertEqual(response.status_code, status_code.OK)
+        self.assertEqual(response.status_code, status.OK)
         self.assertTemplateUsed(response, 'articles/article_base_form.html')
         self.assertTemplateUsed(response, 'articles/article_new.html')
 
     def test_logged_out_user_cannot_access_article_create_view(self):
         self.client.logout()
         response = self.client.get(reverse('articles:article_new'))
-        self.assertEqual(response.status_code, status_code.NOT_FOUND)
+        self.assertEqual(response.status_code, status.NOT_FOUND)
 
     def test_post_article_create_view(self):
         self.client.login(username='testuser', password='testuser1234')
@@ -159,7 +159,7 @@ class ArticleViewTestCase(TestCase):
             'publish_at': '2020-01-01 00:00'
         }
         response = self.client.post(reverse('articles:article_new'), data=data)
-        self.assertEqual(response.status_code, status_code.FOUND)
+        self.assertEqual(response.status_code, status.FOUND)
         self.assertRedirects(response, reverse('articles:article_list'))
 
     def test_post_fails_article_create_view(self):
@@ -172,7 +172,7 @@ class ArticleViewTestCase(TestCase):
             'publish_at': '2020-01-01 00:00'
         }
         response = self.client.post(reverse('articles:article_new'), data=data)
-        self.assertEqual(response.status_code, status_code.OK)
+        self.assertEqual(response.status_code, status.OK)
         self.assertFormError(response, 'form', 'title',
                              'この Title を持った Article が既に存在します。')
 
@@ -180,7 +180,7 @@ class ArticleViewTestCase(TestCase):
         self.client.login(username='testuser', password='testuser1234')
         response = self.client.get(
             reverse('articles:article_edit', kwargs={'pk': self.second_article.pk}))
-        self.assertEqual(response.status_code, status_code.OK)
+        self.assertEqual(response.status_code, status.OK)
         self.assertTemplateUsed(response, 'articles/article_base_form.html')
         self.assertTemplateUsed(response, 'articles/article_edit.html')
 
@@ -188,7 +188,7 @@ class ArticleViewTestCase(TestCase):
         self.client.logout()
         response = self.client.get(
             reverse('articles:article_edit', kwargs={'pk': self.second_article.pk}))
-        self.assertEqual(response.status_code, status_code.NOT_FOUND)
+        self.assertEqual(response.status_code, status.NOT_FOUND)
 
     def test_post_article_update_view(self):
         self.client.login(username='testuser', password='testuser1234')
@@ -201,7 +201,7 @@ class ArticleViewTestCase(TestCase):
         }
         response = self.client.post(reverse('articles:article_edit', kwargs={
                                     'pk': self.second_article.pk}), data=data)
-        self.assertEqual(response.status_code, status_code.FOUND)
+        self.assertEqual(response.status_code, status.FOUND)
         self.assertRedirects(response, reverse(
             'articles:article_detail', kwargs={'pk': self.second_article.pk}))
         response = self.client.get(reverse(
@@ -219,7 +219,7 @@ class ArticleViewTestCase(TestCase):
         }
         response = self.client.post(reverse('articles:article_edit', kwargs={
                                     'pk': self.second_article.pk}), data=data)
-        self.assertEqual(response.status_code, status_code.OK)
+        self.assertEqual(response.status_code, status.OK)
         self.assertFormError(response, 'form', 'title',
                              'この Title を持った Article が既に存在します。')
 
@@ -227,11 +227,11 @@ class ArticleViewTestCase(TestCase):
         self.client.login(username='testuser', password='testuser1234')
         response = self.client.post(
             reverse('articles:article_delete', kwargs={'pk': self.second_article.pk}))
-        self.assertEqual(response.status_code, status_code.FOUND)
+        self.assertEqual(response.status_code, status.FOUND)
         self.assertRedirects(response, reverse('articles:article_list'))
         no_response = self.client.get(reverse(
             'articles:article_detail', kwargs={'pk': self.second_article.pk}))
-        self.assertEqual(no_response.status_code, status_code.NOT_FOUND)
+        self.assertEqual(no_response.status_code, status.NOT_FOUND)
         response = self.client.get(reverse('articles:article_list'))
         self.assertContains(response, 'example')
         self.assertNotContains(response, 'example2')
