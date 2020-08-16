@@ -50,6 +50,8 @@ class Comment(CoreModel):
     name = models.CharField("name", max_length=255, default="unknown")
     comment = models.TextField('comment', help_text='Markdown対応')
 
+    objects = CommentManager()
+
     class Meta:
         ordering = ('timestamp', )
 
