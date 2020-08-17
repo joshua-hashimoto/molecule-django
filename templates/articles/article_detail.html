@@ -40,6 +40,22 @@
     {% include 'articles/article_detail_content.html' with article=article %}
 
     <section class="uk-section">
+        <h4>関連記事</h4>
+        <hr>
+        <uk class="uk-list">
+            {% for related_article in article.related_articles.all %}
+                <li>
+                    <h5 class="uk-heading-bullet">
+                        <a class="uk-link-heading" href="{{ related_article.get_absolute_url }}">
+                            {{ related_article.title }}
+                        </a>
+                    </h5>
+                </li>
+            {% endfor %}
+        </uk>
+    </section>
+
+    <section class="uk-section">
         <h4>コメント</h4>
         <hr>
         {% include 'comments/comment_modal.html' with form=comment_form article=article %}
