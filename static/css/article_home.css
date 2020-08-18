@@ -27,5 +27,6 @@
 
 #home .article-filter .article-filter-section .filter-tags input[type="checkbox"]:checked + label {
   border-color: var(--main-theme);
-  color: var(--main-theme);
+  background: var(--main-theme);
+  color: white;
 }
