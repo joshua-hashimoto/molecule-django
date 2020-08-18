@@ -47,7 +47,7 @@ class Tag(CoreModel):
         Attributes:
             ordering (List): use to determine the ordering of model objects when listed
         """
-        ordering = ['-timestamp', '-updated', ]
+        ordering = ['timestamp', 'updated', ]
 
     def __str__(self):
         return self.name
