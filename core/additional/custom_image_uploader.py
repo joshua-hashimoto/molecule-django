@@ -73,7 +73,7 @@ class MarkdownImageUploader(View):
         cloudinary_img = cloudinary.uploader.upload(
             image, folder=img_folder, overwrite=True)
         # get the saved image url from cloudinary response
-        cloudinary_img_url = cloudinary_img['url']
+        cloudinary_img_url = cloudinary_img['secure_url']
         # name json data to return to markdown
         data = json.dumps({
             'status': 200,
