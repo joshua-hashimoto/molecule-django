@@ -63,7 +63,8 @@ class ArticleQuerySet(models.QuerySet):
             Q(is_active=True) &
             Q(publish_at__lte=now) &
             Q(title__icontains=query) |
-            Q(description__icontains=query)
+            Q(description__icontains=query) |
+            Q(content__icontains=query)
         )
         queryset = self.filter(lookup)
         return queryset
