@@ -35,9 +35,13 @@
         td {
             padding: 5px 10px;
             vertical-align: top;
-            color: var(--text-color);
             text-align: start;
-            border: solid 1px var(--bg-color);
+            border: solid 1px #ccc;
+        }
+
+        th {
+            background: var(--forth-theme);
+            text-align: center;
         }
     }
 
