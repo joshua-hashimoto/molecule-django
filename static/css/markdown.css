@@ -6,10 +6,9 @@
   border-width: 1px;
   border-style: solid;
   border-color: transparent;
-  font-style: italic;
   border-radius: 20px;
-  font-weight: 500;
   list-style-type: none;
+  font-size: 17px;
 }
 
 .markdown .toc ul > li {
