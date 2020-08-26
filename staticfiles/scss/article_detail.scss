@@ -1,0 +1,13 @@
+.to-top {
+    position: fixed;
+    bottom: 2%;
+    right: 15%;
+}
+
+@media (max-width: 575.98px) {
+    .to-top {
+        position: fixed;
+        bottom: 2%;
+        right: 2%;
+    }
+}
