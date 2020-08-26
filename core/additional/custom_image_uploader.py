@@ -7,6 +7,8 @@ from django.http import HttpResponse
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 
+from martor.utils import LazyEncoder
+
 import cloudinary
 
 

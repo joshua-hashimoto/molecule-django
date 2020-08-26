@@ -125,6 +125,20 @@ class ArticleViewTestCase(TestCase):
         self.assertTemplateUsed(
             response, 'articles/article_detail_content.html')
 
+    def test_article_search(self):
+        Article.objects.create(
+            author=self.user,
+            title='example4',
+            description='example description',
+            content='#search test',
+            keywords='example4',
+            publish_at='2020-01-01 00:00',)
+        self.client.logout()
+        response = self.client.get(
+            reverse('articles:article_list') + '?search=search')
+        self.assertEqual(response.status_code, status.OK)
+        self.assertEqual(len(response.context.get('article_list')), 1)
+
     def test_article_detail_view(self):
         self.client.logout()
         response = self.client.get(

@@ -162,65 +162,19 @@ MEDIA_ROOT = BASE_DIR / 'media'
 
 
 # email settings
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
-DEFAULT_FROM_EMAIL = 'notification@molecule.com'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER')
-EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD')
-EMAIL_PORT = 587
-EMAIL_USE_TLS = True
-
+from core.configs.email_settings import *
 
 # message framework config
-from django.contrib.messages import constants as messages
-MESSAGE_TAGS = {
-    messages.INFO: "uk-alert-primary",
-    messages.SUCCESS: "uk-alert-success",
-    messages.WARNING: "uk-alert-warning",
-    messages.ERROR: "uk-alert-danger",
-}
-
+from core.configs.message_framework import *
 
 # cloudinary configs
-CLOUDINARY_STORAGE = {
-    'CLOUD_NAME': os.environ.get('CLOUDINARY_NAME'),
-    'API_KEY': os.environ.get('CLOUDINARY_API_KEY'),
-    'API_SECRET': os.environ.get('CLOUDINARY_API_SECRET'),
-}
-# DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.MediaCloudinaryStorage'
-DEFAULT_FILE_STORAGE = 'cloudinary_storage.storage.VideoMediaCloudinaryStorage'
-
+from core.configs.cloudinary import *
 
 # martor
-MARTOR_ENABLE_CONFIGS = {
-    'emoji': 'true',        # to enable/disable emoji icons.
-    'imgur': 'true',        # to enable/disable imgur/custom uploader.
-    'mention': 'false',     # to enable/disable mention
-    # to include/revoke jquery (require for admin default django)
-    'jquery': 'true',
-    'living': 'false',      # to enable/disable live updates in preview
-    'spellcheck': 'false',  # to enable/disable spellcheck in form textareas
-    'hljs': 'true',         # to enable/disable hljs highlighting in preview
-}
-# Upload to locale storage
-MARTOR_UPLOAD_URL = '/api/uploader/'  # change to local uploader
-# Maximum Upload Image
-# 2.5MB - 2621440
-# 5MB - 5242880
-# 10MB - 10485760
-# 20MB - 20971520
-# 50MB - 5242880
-# 100MB 104857600
-# 250MB - 214958080
-# 500MB - 429916160
-MAX_IMAGE_UPLOAD_SIZE = 10485760
-
+from core.configs.martor import *
 
 # debug_toolbar configs
-# docker内でなければ基本的に必要ない
-import socket
-hostname, _, ips = socket.gethostbyname_ex(socket.gethostname())
-INTERNAL_IPS = [ip[:-1] + '1' for ip in ips]
+from core.configs.debug_toolbar import *
 
 
 # security configs
