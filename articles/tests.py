@@ -155,8 +155,7 @@ class ArticleViewTestCase(TestCase):
         self.client.login(username='testuser', password='testuser1234')
         response = self.client.get(reverse('articles:article_new'))
         self.assertEqual(response.status_code, status.OK)
-        self.assertTemplateUsed(response, 'articles/article_base_form.html')
-        self.assertTemplateUsed(response, 'articles/article_new.html')
+        self.assertTemplateUsed(response, 'articles/article_form.html')
 
     def test_logged_out_user_cannot_access_article_create_view(self):
         self.client.logout()
@@ -195,8 +194,7 @@ class ArticleViewTestCase(TestCase):
         response = self.client.get(
             reverse('articles:article_edit', kwargs={'pk': self.second_article.pk}))
         self.assertEqual(response.status_code, status.OK)
-        self.assertTemplateUsed(response, 'articles/article_base_form.html')
-        self.assertTemplateUsed(response, 'articles/article_edit.html')
+        self.assertTemplateUsed(response, 'articles/article_form.html')
 
     def test_logged_out_user_cannot_access_article_update_view(self):
         self.client.logout()

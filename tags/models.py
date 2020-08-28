@@ -38,7 +38,7 @@ class Tag(CoreModel):
     Attributes:
         name (CharField): the name of tag
     """
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, unique=True)
 
     objects = TagManager()
 
