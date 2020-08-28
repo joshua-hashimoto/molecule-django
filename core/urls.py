@@ -16,6 +16,7 @@ urlpatterns = [
     # local apps
     path('', include('articles.urls')),
     path('comments/', include('comments.urls')),
+    path('tags/', include('tags.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 if settings.DEBUG:

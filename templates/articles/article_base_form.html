@@ -34,7 +34,7 @@
     <div class="article-relations">
         <div>
             <h4>Tags</h4>
-            <div class="uk-margin">
+            <div class="uk-flex uk-margin">
                 <div class="uk-search uk-search-default">
                     <span uk-search-icon></span>
                     <input
@@ -44,6 +44,9 @@
                         placeholder="Search Tags..."
                         onkeyup="filterTags()"
                     >
+                </div>
+                <div>
+                    <a href="#tag-modal" class="uk-icon-button main-theme" uk-icon="plus" uk-toggle></a>
                 </div>
             </div>
             <ul id="tag-list" class="uk-list uk-height-small uk-overflow-hidden uk-overflow-auto">
