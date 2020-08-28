@@ -71,7 +71,7 @@
                                 >
                             </div>
                             <div>
-                                <a href="#tag-modal" class="uk-icon-button main-theme" uk-icon="plus" uk-toggle></a>
+                                <a id="tag-modal-button" href="#tag-modal" class="uk-icon-button main-theme" uk-icon="plus" uk-toggle></a>
                             </div>
                         </div>
                         <ul id="tag-list" class="uk-list uk-height-small uk-overflow-hidden uk-overflow-auto">
@@ -188,10 +188,15 @@ $.ajaxSetup({
     }
 });
 
+$('#tag-modal-button').on('click', () => {
+    // if there is a uk-form-danger class, remove it
+    $('#new_tag').removeClass('uk-form-danger');
+    $('#new_tag').val('');
+})
+
 $('#tag-ajax-new').on('submit', event => {
     // prevent default page change event
     event.preventDefault();
-
 
     $.ajax({
         'url': '{% url "tags:tag_ajax_new" %}',
@@ -200,32 +205,35 @@ $('#tag-ajax-new').on('submit', event => {
             'tag_name': $('#new_tag').val(),  // tag name
         },
         'dataType': 'json'
-    }).done(response => {
-        // get tag list
-        const tagListElement = $('#tag-list');
-        const tagLiCount = tagListElement.children().length;
-        // create new tag element
-        const li = $('<li>');
-        const tagInput = $('<input>').attr({
-            type: 'checkbox',
-            name: 'tags',
-            value: response.id,
-            id: `id_tags_${tagLiCount}`,
-        }).prop('checked', true);
-        const tagLabel = $('<label>', {
-            class: 'uk-text-truncate',
-            text: `${response.name}`,
-            for: `id_tags_${tagLiCount}`,
+    }).then(
+        (response) => {
+            // get tag list
+            const tagListElement = $('#tag-list');
+            const tagLiCount = tagListElement.children().length;
+            // create new tag element
+            const li = $('<li>');
+            const tagInput = $('<input>').attr({
+                type: 'checkbox',
+                name: 'tags',
+                value: response.id,
+                id: `id_tags_${tagLiCount}`,
+            }).prop('checked', true);
+            const tagLabel = $('<label>', {
+                class: 'uk-text-truncate',
+                text: `${response.name}`,
+                for: `id_tags_${tagLiCount}`,
+            });
+            const liInnerDiv = $('<div/>').append(tagInput).append(tagLabel);
+            li.append(liInnerDiv);
+            // append new tag element to tag list
+            tagListElement.append(li);
+            // close modal
+            const modalElement = $('#tag-modal');
+            UIkit.modal(modalElement).hide();
+        }, (error) => {
+            console.error(error);
+            $('#new_tag').addClass('uk-form-danger');
         });
-        const liInnerDiv = $('<div/>').append(tagInput).append(tagLabel);
-        li.append(liInnerDiv);
-        // append new tag element to tag list
-        tagListElement.append(li);
-        $('#new_tag').val('');
-        // close modal
-        const modalElement = $('#tag-modal');
-        UIkit.modal(modalElement).hide();
-    });
 });
 </script>
 {% endblock js %}
