@@ -10,7 +10,7 @@ class ArticleForm(forms.ModelForm):
     related_articles = forms.ModelMultipleChoiceField(
         queryset=Article.objects.all(), widget=forms.CheckboxSelectMultiple, required=False)
     publish_at = forms.DateTimeField(
-        widget=forms.DateTimeInput(attrs={'autocomplete': 'off'}))
+        widget=forms.DateTimeInput(attrs={'autocomplete': 'off'}), required=False)
 
     class Meta:
         model = Article
