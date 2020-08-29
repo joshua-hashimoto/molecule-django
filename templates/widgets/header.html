@@ -15,7 +15,7 @@
         </div>
         <div class="uk-navbar-right">
             {% if user.is_authenticated %}
-                <a href="{% url 'articles:article_new' %}" class="add-icon-button uk-icon-button" uk-icon="plus"></a>
+                <a href="{% url 'articles:article_new' %}" class="uk-icon-button main-theme" uk-icon="plus"></a>
             {% else %}
                 <ul class="uk-navbar-nav">
                     <li>

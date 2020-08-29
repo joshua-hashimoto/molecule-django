@@ -104,7 +104,7 @@ class ArticleCreateView(AccessPermissionToUsersMixin, CreateView):
     """
     model = Article
     form_class = ArticleForm
-    template_name = 'articles/article_new.html'
+    template_name = 'articles/article_form.html'
     success_url = reverse_lazy('articles:article_list')
 
     def form_valid(self, form):
@@ -129,7 +129,7 @@ class ArticleUpdateView(AccessPermissionToUsersMixin, UpdateView):
     """
     model = Article
     form_class = ArticleForm
-    template_name = 'articles/article_edit.html'
+    template_name = 'articles/article_form.html'
 
     def form_valid(self, form):
         """
