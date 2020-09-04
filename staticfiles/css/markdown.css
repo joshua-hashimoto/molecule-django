@@ -102,7 +102,7 @@
   .markdown img {
     display: flex;
     width: 90%;
-    box-shadow: var(--common) -shadow;
+    box-shadow: var(--shadow);
     transition: all 0.2s ease-out 0s;
     margin-left: auto;
     margin-right: auto;
@@ -113,7 +113,7 @@
   .markdown img {
     display: flex;
     width: 100%;
-    box-shadow: var(--common) -shadow;
+    box-shadow: var(--shadow);
     transition: all 0.2s ease-out 0s;
     margin-left: auto;
     margin-right: auto;
