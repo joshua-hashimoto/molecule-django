@@ -18,6 +18,7 @@ class CommentModelTestCase(TestCase):
         self.article = Article.objects.create(
             author=user,
             title='example',
+            slug='example',
             description='example description',
             content='#example',
             keywords='example',
@@ -59,6 +60,7 @@ class CommentViewTestCase(TestCase):
         self.article = Article.objects.create(
             author=user,
             title='example',
+            slug='example',
             description='example description',
             content='#example',
             keywords='example',
@@ -71,7 +73,7 @@ class CommentViewTestCase(TestCase):
     def test_comment_create_view_can_create_comment(self):
         context_data = {
             'verify': 'ぶんし',
-            'article_id': self.article.pk,
+            'article_slug': self.article.slug,
             'name': 'unknown',
             'comment': '# comment',
         }
@@ -79,14 +81,14 @@ class CommentViewTestCase(TestCase):
             reverse('comments:comment_new'), data=context_data)
         self.assertEqual(response.status_code, status.FOUND)
         self.assertRedirects(response, reverse(
-            'articles:article_detail', kwargs={'pk': self.article.pk}))
+            'articles:article_detail', kwargs={'slug': self.article.slug}))
         comments = Comment.objects.all()
         self.assertEqual(comments.count(), 2)
 
     def test_comment_fail_with_verification(self):
         context_data = {
             'verify': '分子',
-            'article_id': self.article.pk,
+            'article_slug': self.article.slug,
             'name': 'unknown',
             'comment': '# comment',
         }
@@ -94,7 +96,7 @@ class CommentViewTestCase(TestCase):
             reverse('comments:comment_new'), data=context_data)
         self.assertEqual(response.status_code, status.FOUND)
         self.assertRedirects(response, reverse(
-            'articles:article_detail', kwargs={'pk': self.article.pk}))
+            'articles:article_detail', kwargs={'slug': self.article.slug}))
         comments = Comment.objects.all()
         self.assertEqual(comments.count(), 1)
 
@@ -115,7 +117,7 @@ class CommentViewTestCase(TestCase):
     def test_comment_fail_with_form_error(self):
         context_data = {
             'verify': '分子',
-            'article_id': self.article.pk,
+            'article_slug': self.article.slug,
             'name': '',
             'comment': '# comment',
         }
@@ -123,6 +125,6 @@ class CommentViewTestCase(TestCase):
             reverse('comments:comment_new'), data=context_data)
         self.assertEqual(response.status_code, status.FOUND)
         self.assertRedirects(response, reverse(
-            'articles:article_detail', kwargs={'pk': self.article.pk}))
+            'articles:article_detail', kwargs={'slug': self.article.slug}))
         comments = Comment.objects.all()
         self.assertEqual(comments.count(), 1)
