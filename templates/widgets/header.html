@@ -14,15 +14,48 @@
             </ul>
         </div>
         <div class="uk-navbar-right">
-            {% if user.is_authenticated %}
-                <a href="{% url 'articles:article_new' %}" class="uk-icon-button main-theme" uk-icon="plus"></a>
-            {% else %}
-                <ul class="uk-navbar-nav">
+            <ul class="uk-navbar-nav">
+                {% if user.is_authenticated %}
+                    <li>
+                        <a href="#">{{ user.username }}</a>
+                        <div class="uk-navbar-dropdown">
+                            <ul class="uk-nav uk-navbar-dropdown-nav">
+                                <li>
+                                    <a class="uk-text-uppercase" href="{% url 'articles:article_new' %}">
+                                        <span>
+                                            <i class="fas fa-plus"></i>
+                                        </span>
+                                        new article
+                                    </a>
+                                </li>
+                                {% if maintenance_mode %}
+                                    <li>
+                                        <a class="uk-text-uppercase" href="{% url 'maintenance_mode_off' %}">
+                                            <span>
+                                                <i class="fas fa-wrench"></i>
+                                            </span>
+                                            off
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a class="uk-text-uppercase" href="{% url 'maintenance_mode_on' %}">
+                                            <span>
+                                                <i class="fas fa-wrench"></i>
+                                            </span>
+                                            on
+                                        </a>
+                                    </li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </li>
+                {% else %}
                     <li>
                         <a href="https://joshua-hashimoto.github.io/">About</a>
                     </li>
-                </ul>
-            {% endif %}
+                {% endif %}
+            </ul>
             <div class="uk-text-meta uk-padding">© Joshua Hashimoto. 2020</div>
         </div>
     </nav>

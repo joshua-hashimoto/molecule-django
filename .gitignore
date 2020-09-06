@@ -135,3 +135,6 @@ docker-compose.prod.yml
 
 # vscode
 .vscode/
+
+# third party
+maintenance_mode_state.txt

@@ -23,6 +23,7 @@ martor = "*"
 django-sass = "*"
 beautifulsoup4 = "*"
 dj-database-url = "*"
+django-maintenance-mode = "*"
 
 [requires]
 python_version = "3.8"
