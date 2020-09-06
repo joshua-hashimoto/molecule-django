@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'cloudinary',
     'martor',
     'django_sass',
+    'maintenance_mode',
     # local
     'users.apps.UsersConfig',
     'tags.apps.TagsConfig',
@@ -69,7 +70,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
-    'debug_toolbar.middleware.DebugToolbarMiddleware',  # new for debug_toolbar
+    'debug_toolbar.middleware.DebugToolbarMiddleware',  # for debug_toolbar
+    'maintenance_mode.middleware.MaintenanceModeMiddleware'  # for maintenance_mode
 ]
 
 ROOT_URLCONF = 'core.urls'
@@ -87,6 +89,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'maintenance_mode.context_processors.maintenance_mode',  # for maintenance_mode
             ],
         },
     },
@@ -175,6 +178,9 @@ from core.configs.martor import *
 
 # debug_toolbar configs
 from core.configs.debug_toolbar import *
+
+# maintenance_mode configs
+from core.configs.maintenance_mode import *
 
 
 # security configs
