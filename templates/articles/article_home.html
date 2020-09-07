@@ -50,9 +50,9 @@
     </div>
 
     <div class="article-list uk-width-2-3@m">
-        <ul uk-accordion>
+        <div>
             {% for article in article_list %}
-                {% include 'articles/article_accordion.html' with article=article %}
+                {% include 'articles/article_cell.html' with article=article %}
             {% empty %}
                 <div class="uk-width-1-1">
                     <div class="uk-tile uk-tile-default uk-padding-small uk-box-shadow-small uk-text-center">
@@ -60,7 +60,7 @@
                     </div>
                 </div>
             {% endfor %}
-        </ul>
+        </div>
         {% if paginator.page_range %}
             {% include 'widgets/pagination.html' %}
         {% endif %}
