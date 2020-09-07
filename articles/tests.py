@@ -221,9 +221,9 @@ class ArticleViewTestCase(TestCase):
                                     'slug': self.second_article.slug}), data=data)
         self.assertEqual(response.status_code, status.FOUND)
         self.assertRedirects(response, reverse(
-            'articles:article_detail', kwargs={'slug': self.second_article.slug}))
+            'articles:article_detail', kwargs={'slug': 'example2-edit'}))
         response = self.client.get(reverse(
-            'articles:article_detail', kwargs={'slug': self.second_article.slug}))
+            'articles:article_detail', kwargs={'slug': 'example2-edit'}))
         self.assertContains(response, 'example2 edit')
 
     def test_post_fails_article_update_view(self):
