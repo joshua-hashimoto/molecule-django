@@ -61,8 +61,6 @@ class ArticleAdmin(admin.ModelAdmin):
     inactive.short_description = '閲覧不可能'
 
     def identifier(self, obj):
-        if obj.slug is None or obj.slug == '':
-            return obj.pk
         return obj.slug
 
     identifier.short_description = 'identifier'

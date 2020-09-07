@@ -171,7 +171,7 @@ class Article(CoreModel):
     cover = models.ImageField(
         upload_to=upload_image_to, blank=True, null=True, storage=MediaCloudinaryStorage())
     title = models.CharField(max_length=255, unique=True)
-    slug = models.SlugField(null=True, blank=True, unique=True)
+    slug = models.SlugField(unique=True)
     description = models.TextField()
     content = MartorField()
     related_articles = models.ManyToManyField(
