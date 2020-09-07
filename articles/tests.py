@@ -226,7 +226,7 @@ class ArticleViewTestCase(TestCase):
             'articles:article_detail', kwargs={'slug': 'example2-edit'}))
         self.assertContains(response, 'example2 edit')
 
-    def test_post_fails_article_update_view(self):
+    def test_post_fails_with_existing_title_article_update_view(self):
         self.client.login(username='testuser', password='testuser1234')
         data = {
             'title': 'example',
@@ -240,6 +240,22 @@ class ArticleViewTestCase(TestCase):
         self.assertEqual(response.status_code, status.OK)
         self.assertFormError(response, 'form', 'title',
                              'この Title を持った Article が既に存在します。')
+
+    def test_post_fails_with_existing_slug_article_update_view(self):
+        self.client.login(username='testuser', password='testuser1234')
+        data = {
+            'title': 'example',
+            'slug': 'example',
+            'description': 'example description',
+            'content': '#example2',
+            'keywords': 'example2',
+            'publish_at': '2020-01-01 00:00'
+        }
+        response = self.client.post(reverse('articles:article_edit', kwargs={
+                                    'slug': self.second_article.slug}), data=data)
+        self.assertEqual(response.status_code, status.OK)
+        self.assertFormError(response, 'form', 'slug',
+                             'この Slug を持った Article が既に存在します。')
 
     def test_delete_modal_can_delete(self):
         self.client.login(username='testuser', password='testuser1234')
