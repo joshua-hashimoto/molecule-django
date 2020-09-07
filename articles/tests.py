@@ -141,6 +141,38 @@ class ArticleViewTestCase(TestCase):
         self.assertEqual(response.status_code, status.OK)
         self.assertEqual(len(response.context.get('article_list')), 1)
 
+    def test_article_tag_filter(self):
+        fifth_article = Article.objects.create(
+            author=self.user,
+            title='example5',
+            slug='example5',
+            description='example description',
+            content='#search test',
+            keywords='example5',
+            publish_at='2020-01-01 00:00',)
+        fifth_article.tags.set([self.tag.id])
+        self.client.logout()
+        response = self.client.get(
+            reverse('articles:article_list') + f'?tags={self.tag.name}')
+        self.assertEqual(response.status_code, status.OK)
+        self.assertEqual(len(response.context.get('article_list')), 2)
+
+    def test_article_search_and_tag_filter(self):
+        fifth_article = Article.objects.create(
+            author=self.user,
+            title='example6',
+            slug='example6',
+            description='example description',
+            content='#search test',
+            keywords='example6',
+            publish_at='2020-01-01 00:00',)
+        fifth_article.tags.set([self.tag.id])
+        self.client.logout()
+        response = self.client.get(
+            reverse('articles:article_list') + f'?search=search&tags={self.tag.name}')
+        self.assertEqual(response.status_code, status.OK)
+        self.assertEqual(len(response.context.get('article_list')), 1)
+
     def test_article_detail_view(self):
         self.client.logout()
         response = self.client.get(
