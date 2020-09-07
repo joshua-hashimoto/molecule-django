@@ -12,7 +12,7 @@
     <div class="uk-modal-dialog uk-modal-body">
         <form method="post" action="{% url 'comments:comment_new' %}">
             {% csrf_token %}
-            <input type="hidden" name="article_id" value="{{ article.pk }}">
+            <input type="hidden" name="article_slug" value="{{ article.slug }}">
             <div class="uk-margin">
                 コメント認証:
                 {{ form.verify }}

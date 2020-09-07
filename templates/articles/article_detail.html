@@ -30,7 +30,7 @@
 
     {% if user.is_authenticated %}
         <div class="uk-flex uk-flex-around uk-padding">
-            <a href="{% url 'articles:article_edit' pk=article.pk %}" class="uk-button main-theme">edit</a>
+            <a href="{% url 'articles:article_edit' slug=article.slug %}" class="uk-button main-theme">edit</a>
             {% include 'articles/article_delete_modal.html' with article=article %}
         </div>
     {% endif %}

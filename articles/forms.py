@@ -19,6 +19,7 @@ class ArticleForm(forms.ModelForm):
             'video',
             'cover',
             'title',
+            'slug',
             'description',
             'content',
             'related_articles',

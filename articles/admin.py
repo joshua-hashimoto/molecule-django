@@ -21,20 +21,21 @@ class ArticleAdmin(admin.ModelAdmin):
     """
 
     list_display = [
-        'id',
+        'identifier',
         'title',
         'truncated_description',
         'is_published',
         'is_active',
     ]
     list_display_links = [
-        'id',
+        'identifier',
     ]
     list_filter = [
         'title',
         'is_active',
     ]
     search_fields = [
+        'slug',
         'title',
         'description',
         'content',
@@ -58,6 +59,11 @@ class ArticleAdmin(admin.ModelAdmin):
         queryset.update(is_active=False)
 
     inactive.short_description = '閲覧不可能'
+
+    def identifier(self, obj):
+        return obj.slug
+
+    identifier.short_description = 'identifier'
 
     def truncated_description(self, obj):
         """
