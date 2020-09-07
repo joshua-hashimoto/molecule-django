@@ -20,21 +20,21 @@ class CommentCreateView(View):
         a django default method called on a post request to the view.
         when the comment is created email will be send to the blog creator.
         the flow is the flowing,
-        1. check if the article_id exists in the data.
+        1. check if the article_slug exists in the data.
            if not, send a error message and redirect to home page
         2. check if the form is valid.
-           if not send a error message and redirect to detail page with the article_id
+           if not send a error message and redirect to detail page with the article_slug
         3. check if the value of 'verify' is correct.
-           if not send a error message and redirect to detail page with the article_id
-        4. get the article object using the article_id
+           if not send a error message and redirect to detail page with the article_slug
+        4. get the article object using the article_slug
         5. execute form.save(commit=False)
         6. attach article to comment
         7. execute form.save()
         8. send email to creator of the blog(not post)
-        9. redirect to detail page with the article_id
+        9. redirect to detail page with the article_slug
         """
-        article_id = request.POST.get('article_id')
-        if not article_id:
+        article_slug = request.POST.get('article_slug')
+        if not article_slug:
             messages.error(request, '問題が発生しました。もう一度お試しください :(')
             return redirect('articles:article_list')
 
@@ -43,8 +43,8 @@ class CommentCreateView(View):
             verified_word = form.cleaned_data.get('verify')
             if verified_word != 'ぶんし':
                 messages.error(request, '認証が通りませんでした。もう一度お試しください :(')
-                return redirect('articles:article_detail', pk=article_id)
-            target_article = get_object_or_404(Article, pk=article_id)
+                return redirect('articles:article_detail', slug=article_slug)
+            target_article = get_object_or_404(Article, slug=article_slug)
             comment = form.save(commit=False)
             comment.article = target_article
             comment.save()
@@ -53,7 +53,7 @@ class CommentCreateView(View):
             messages.success(request, "コメントを残しました :)")
         else:
             messages.error(request, "コメントを残すことができませんでした :(")
-        return redirect('articles:article_detail', pk=article_id)
+        return redirect('articles:article_detail', slug=article_slug)
 
     def send_email_notification(self, comment, article):
         """

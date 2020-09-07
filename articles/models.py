@@ -152,6 +152,7 @@ class Article(CoreModel):
         video (FileField): field for video files. saved to cloudinary
         cover (ImageField): field for image files. saved to cloudinary
         title (CharField): field for article title. max length to 255. this field needs to be unique
+        slug (SlugField): field for article slug. used for routing
         description (TextField): field for article description.
         content (MartorField): field for article content. uses martor's MartorField for markdown.
         related_article (ManyToManyField): many-to-many relation to set self as related articles
@@ -170,6 +171,7 @@ class Article(CoreModel):
     cover = models.ImageField(
         upload_to=upload_image_to, blank=True, null=True, storage=MediaCloudinaryStorage())
     title = models.CharField(max_length=255, unique=True)
+    slug = models.SlugField(null=True, blank=True, unique=True)
     description = models.TextField()
     content = MartorField()
     related_articles = models.ManyToManyField(
@@ -202,7 +204,7 @@ class Article(CoreModel):
         determine to absolute url of the model.
         mainly used to route to detail view.
         """
-        return reverse("articles:article_detail", kwargs={"pk": self.pk})
+        return reverse("articles:article_detail", kwargs={"slug": self.slug})
 
     def get_markdown(self):
         """

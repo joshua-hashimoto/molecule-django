@@ -146,7 +146,7 @@ class ArticleUpdateView(AccessPermissionToUsersMixin, UpdateView):
         the update is successful.
         Override to give a url to go to after the update is success.
         """
-        return reverse_lazy('articles:article_detail', kwargs={'pk': self.object.pk})
+        return reverse_lazy('articles:article_detail', kwargs={'slug': self.object.slug})
 
 
 class ArticleDeleteView(AccessPermissionToUsersMixin, DeleteView):

@@ -15,7 +15,7 @@
                 <button class="uk-button uk-button-default uk-modal-close" type="button">Cancel</button>
             </div>
             <div>
-                <form action="{% url 'articles:article_delete' pk=article.pk %}" method="post">
+                <form action="{% url 'articles:article_delete' slug=article.slug %}" method="post">
                     {% csrf_token %}
                     <button class="uk-button uk-button-danger" type="submit">delete</button>
                 </form>
