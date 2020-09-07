@@ -1,0 +1,22 @@
+{% load static %}
+{% load humanize %}
+{% load is_not_published %}
+{% load is_not_written %}
+
+<a class="uk-box-shadow-hover-small uk-display-block uk-link-reset uk-margin" href="{{ article.get_absolute_url }}">
+    <div class="uk-box-shadow-small uk-padding-small">
+        <div class="uk-flex uk-flex-between">
+            <span class="uk-h4 open-text">{{ article.title }}</span>
+            {% if article|is_not_written %}
+                <div class="uk-badge uk-label badge-background">未完成</div>
+            {% elif article|is_not_published %}
+                <div class="uk-badge uk-label badge-background">未公開</div>
+            {% else %}
+                <time class="uk-text-meta open-text" datetime="{{ article.publish_at | date:'Y-m-d' }}">
+                    {{ article.publish_at | naturalday }}
+                </time>
+            {% endif %}
+        </div>
+        <div class="uk-text-meta">{{ article.description }}</div>
+    </div>
+</a>
