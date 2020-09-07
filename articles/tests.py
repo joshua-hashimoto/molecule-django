@@ -50,6 +50,7 @@ class ArticleModelTestCase(TestCase):
         article = Article.objects.create(
             author=self.user,
             title='example3',
+            slug='example3',
             description='example description',
             content='#example3',
             keywords='example3',
@@ -111,9 +112,7 @@ class ArticleViewTestCase(TestCase):
         # check if tag is rendered to template
         self.assertContains(response, 'example tag')
         self.assertTemplateUsed(response, 'articles/article_home.html')
-        self.assertTemplateUsed(response, 'articles/article_accordion.html')
-        self.assertTemplateUsed(
-            response, 'articles/article_detail_content.html')
+        self.assertTemplateUsed(response, 'articles/article_cell.html')
         self.assertTemplateUsed(response, 'widgets/pagination.html')
 
     def test_article_list_view_for_logged_out_user(self):
@@ -125,14 +124,13 @@ class ArticleViewTestCase(TestCase):
         # check if tag is rendered to template
         self.assertContains(response, 'example tag')
         self.assertTemplateUsed(response, 'articles/article_home.html')
-        self.assertTemplateUsed(response, 'articles/article_accordion.html')
-        self.assertTemplateUsed(
-            response, 'articles/article_detail_content.html')
+        self.assertTemplateUsed(response, 'articles/article_cell.html')
 
     def test_article_search(self):
         Article.objects.create(
             author=self.user,
             title='example4',
+            slug='example4',
             description='example description',
             content='#search test',
             keywords='example4',
@@ -150,8 +148,6 @@ class ArticleViewTestCase(TestCase):
         self.assertEqual(response.status_code, status.OK)
         self.assertContains(response, 'example')
         self.assertTemplateUsed(response, 'articles/article_detail.html')
-        self.assertTemplateUsed(
-            response, 'articles/article_detail_content.html')
         no_response = self.client.get('/molecule/1234/')
         self.assertEqual(no_response.status_code, 404)
 

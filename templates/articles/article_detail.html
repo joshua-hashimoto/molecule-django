@@ -1,6 +1,8 @@
 {% extends '_base.html' %}
 {% load static %}
 {% load humanize %}
+{% load martortags %}
+{% load widget_tweaks %}
 
 
 {% block keywords %}
@@ -37,7 +39,51 @@
     <div class="uk-margin">
         <h2>{{ article.title }}</h2>
     </div>
-    {% include 'articles/article_detail_content.html' with article=article %}
+
+    <article class="uk-article">
+        <div class="article-media">
+            {% if article.cover%}
+                <img class="uk-align-center" src="{{ article.cover.url }}" alt="{{ article.title }}" uk-img>
+            {% endif %}
+
+            {% if article.video %}
+                <div>
+                    <a class="uk-button uk-button-default" href="#lecture-video-modal" uk-toggle>Video</a>
+                </div>
+                <div id="lecture-video-modal" class="uk-flex-top" uk-modal>
+                    <div class="uk-modal-dialog uk-width-auto uk-margin-auto-vertical">
+                        <button class="uk-modal-close-outside" type="button" uk-close></button>
+                        <video src="{{ article.video.url }}" controls playsinline uk-video></video>
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+
+        <div class="article-tags">
+            <ul class="uk-subnav uk-subnav-pill" uk-margin>
+                {% for tag in article.tags.all %}
+                    <li>#{{ tag.name }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+
+        <div class="uk-flex uk-flex-middle uk-margin" uk-grid>
+            <div class="uk-width-1-3@m">
+                <hr>
+            </div>
+            <div class="uk-width-1-3@m uk-text-center">
+                <div>文字数 : {{ article.get_text_count }}</div>
+                <div>画像数 : {{ article.get_img_count }}</div>
+            </div>
+            <div class="uk-width-1-3@m">
+                <hr>
+            </div>
+        </div>
+
+        <div class="markdown">
+            {{ article.content | safe_markdown }}
+        </div>
+    </article>
 
     <section class="uk-section">
         <h4>関連記事</h4>
