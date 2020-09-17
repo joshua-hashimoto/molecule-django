@@ -90,10 +90,10 @@
         <section class="uk-section">
             <hr>
             <h2>シリーズ記事</h2>
-            <uk class="uk-list">
+            <uk class="uk-list uk-list-decimal">
                 {% for related_article in article.related_articles.all_related %}
                     <li class="uk-text-large">
-                        <a class="uk-link-heading uk-heading-bullet" href="{{ related_article.get_absolute_url }}">
+                        <a class="uk-link-heading" href="{{ related_article.get_absolute_url }}">
                             {{ related_article.title }}
                         </a>
                     </li>
