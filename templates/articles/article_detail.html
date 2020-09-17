@@ -83,23 +83,40 @@
         <div class="markdown">
             {{ article.content | safe_markdown }}
         </div>
+
     </article>
 
-    <section class="uk-section">
-        <h4>関連記事</h4>
-        <hr>
-        <uk class="uk-list">
-            {% for related_article in article.related_articles.published %}
-                <li>
-                    <h5 class="uk-heading-bullet">
-                        <a class="uk-link-heading" href="{{ related_article.get_absolute_url }}">
+    {% if article.is_series_summary %}
+        <section class="uk-section">
+            <hr>
+            <h2>シリーズ記事</h2>
+            <uk class="uk-list">
+                {% for related_article in article.related_articles.all_related %}
+                    <li class="uk-text-large">
+                        <a class="uk-link-heading uk-heading-bullet" href="{{ related_article.get_absolute_url }}">
                             {{ related_article.title }}
                         </a>
-                    </h5>
-                </li>
-            {% endfor %}
-        </uk>
-    </section>
+                    </li>
+                {% endfor %}
+            </uk>
+        </section>
+    {% else %}
+        <section class="uk-section">
+            <h4>関連記事</h4>
+            <hr>
+            <uk class="uk-list">
+                {% for related_article in article.related_articles.all_related %}
+                    <li>
+                        <h5 class="uk-heading-bullet">
+                            <a class="uk-link-heading" href="{{ related_article.get_absolute_url }}">
+                                {{ related_article.title }}
+                            </a>
+                        </h5>
+                    </li>
+                {% endfor %}
+            </uk>
+        </section>
+    {% endif %}
 
     <section class="uk-section">
         <h4>コメント</h4>

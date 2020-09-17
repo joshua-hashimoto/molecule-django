@@ -69,6 +69,9 @@ class ArticleQuerySet(models.QuerySet):
         queryset = self.filter(lookup)
         return queryset
 
+    def all_related(self):
+        return self.published().exclude(tags__name='Series').order_by('publish_at')
+
 
 class ArticleManager(models.Manager):
     """
@@ -118,6 +121,9 @@ class ArticleManager(models.Manager):
         if query is None:
             return self.get_queryset().none()
         return self.get_queryset().search(query)
+
+    def all_related(self):
+        return self.get_queryset().all_related()
 
 
 def upload_image_to(instance, filename):
@@ -260,3 +266,7 @@ class Article(CoreModel):
             "img"
         )
         return len(img_tags)
+
+    @property
+    def is_series_summary(self):
+        return 'Series' in [tag.name for tag in self.tags.all()]
