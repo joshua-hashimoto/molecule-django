@@ -4,8 +4,6 @@ from django.shortcuts import HttpResponseRedirect
 from django.views.generic import ListView, DetailView
 from django.views.generic.edit import CreateView, UpdateView, DeleteView
 
-import cloudinary
-
 from .models import Article
 from .filter import ArticleFilter
 from .forms import ArticleForm
