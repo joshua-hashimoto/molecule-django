@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Q
@@ -270,3 +269,9 @@ class Article(CoreModel):
     @property
     def is_series_summary(self):
         return 'Series' in [tag.name for tag in self.tags.all()]
+
+    @property
+    def is_published(self):
+        if self.publish_at is None:
+            return False
+        return timezone.now() > self.publish_at

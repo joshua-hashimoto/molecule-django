@@ -7,7 +7,7 @@ from django.views.generic.edit import CreateView, UpdateView, DeleteView
 from .models import Article
 from .filter import ArticleFilter
 from .forms import ArticleForm
-from .mixin import AccessPermissionToUsersMixin
+from .permissions import AccessPermissionToUsers, PublishPermission
 from comments.forms import CommentCreateForm
 
 
@@ -69,7 +69,7 @@ class ArticleListView(ListView):
         return context
 
 
-class ArticleDetailView(DetailView):
+class ArticleDetailView(PublishPermission, DetailView):
     """
     Passes a single object to template.
 
@@ -89,7 +89,7 @@ class ArticleDetailView(DetailView):
         return context
 
 
-class ArticleCreateView(AccessPermissionToUsersMixin, CreateView):
+class ArticleCreateView(AccessPermissionToUsers, CreateView):
     """
     Passes form class for creating new object.
     Login is required.
@@ -115,7 +115,7 @@ class ArticleCreateView(AccessPermissionToUsersMixin, CreateView):
         return super().form_valid(form)
 
 
-class ArticleUpdateView(AccessPermissionToUsersMixin, UpdateView):
+class ArticleUpdateView(AccessPermissionToUsers, UpdateView):
     """
     Passes form class for creating new object.
     Login is required.
@@ -147,7 +147,7 @@ class ArticleUpdateView(AccessPermissionToUsersMixin, UpdateView):
         return reverse_lazy('articles:article_detail', kwargs={'slug': self.object.slug})
 
 
-class ArticleDeleteView(AccessPermissionToUsersMixin, DeleteView):
+class ArticleDeleteView(AccessPermissionToUsers, DeleteView):
     """
     Delete an existing object.
     Login is required.
