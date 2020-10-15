@@ -91,7 +91,6 @@
                                     <div>
                                         {{ tag.tag }}
                                         <label
-                                            class="uk-text-truncate"
                                             for="{{ tag.id_for_label }}">
                                             {{ tag.choice_label }}
                                         </label>
@@ -233,7 +232,6 @@ $('#tag-ajax-new').on('submit', event => {
                 id: `id_tags_${tagLiCount}`,
             }).prop('checked', true);
             const tagLabel = $('<label>', {
-                class: 'uk-text-truncate',
                 text: `${response.name}`,
                 for: `id_tags_${tagLiCount}`,
             });

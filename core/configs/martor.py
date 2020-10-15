@@ -27,6 +27,7 @@ MARTOR_MARKDOWN_EXTENSIONS = [
     'markdown.extensions.fenced_code',
     'markdown.extensions.toc',  # TOC
     'markdown.extensions.tables',  # table
+    'markdown.extensions.codehilite',  # code line highlight
     # Custom markdown extensions.
     'martor.extensions.urlize',
     'martor.extensions.del_ins',      # ~~strikethrough~~ and ++underscores++
@@ -35,3 +36,4 @@ MARTOR_MARKDOWN_EXTENSIONS = [
     'martor.extensions.mdx_video',    # to parse embed/iframe video
     'martor.extensions.escape_html',  # to handle the XSS vulnerabilities
 ]
+MARTOR_THEME = 'bootstrap'
