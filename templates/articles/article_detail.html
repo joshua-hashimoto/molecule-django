@@ -1,7 +1,6 @@
 {% extends '_base.html' %}
 {% load static %}
 {% load humanize %}
-{% load martortags %}
 {% load widget_tweaks %}
 
 
@@ -81,7 +80,7 @@
         </div>
 
         <div class="markdown">
-            {{ article.content | safe_markdown }}
+            {{ article.get_markdown }}
         </div>
 
     </article>

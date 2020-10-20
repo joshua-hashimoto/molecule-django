@@ -7,7 +7,7 @@ from django.utils import timezone
 
 from cloudinary_storage.storage import VideoMediaCloudinaryStorage, MediaCloudinaryStorage
 from cloudinary_storage.validators import validate_video
-from markdown import markdown
+from martor.utils import markdownify
 from martor.models import MartorField
 from bs4 import BeautifulSoup
 
@@ -69,6 +69,12 @@ class ArticleQuerySet(models.QuerySet):
         return queryset
 
     def all_related(self):
+        """
+        fetch all article except the article that is tagged with tag 'Series'
+
+        Returns:
+            queryset: return all article except the article tagged with 'Series'
+        """
         return self.published().exclude(tags__name='Series').order_by('publish_at')
 
 
@@ -122,6 +128,12 @@ class ArticleManager(models.Manager):
         return self.get_queryset().search(query)
 
     def all_related(self):
+        """
+        call .all_related() from ArticleQuerySet
+
+        Returns:
+            queryset: return queryset returned from ArticleQuerySet.all_related()
+        """
         return self.get_queryset().all_related()
 
 
@@ -220,7 +232,7 @@ class Article(CoreModel):
             str: string of safe html
         """
         content = self.content
-        markdown_content = markdown(content)
+        markdown_content = markdownify(content)
         return mark_safe(markdown_content)
 
     def get_description(self):
@@ -244,7 +256,7 @@ class Article(CoreModel):
             int: length of the string after sanitized by BeautifulSoup4
         """
         content = self.content
-        markdown_content = markdown(content)
+        markdown_content = markdownify(content)
         souped = BeautifulSoup(markdown_content, features="html.parser").findAll(
             text=True
         )
@@ -260,7 +272,7 @@ class Article(CoreModel):
             int: length of the images after filtering through using BeautifulSoup4
         """
         content = self.content
-        markdown_content = markdown(content)
+        markdown_content = markdownify(content)
         img_tags = BeautifulSoup(markdown_content, features="html.parser").find_all(
             "img"
         )
