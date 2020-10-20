@@ -66,7 +66,10 @@ class ArticleListView(ListView):
         """
         context = super().get_context_data(**kwargs)
         context["filter"] = self.form_class(self.request.GET or None)
-        context['article_count'] = Article.objects.published().count()
+        if self.request.user.is_authenticated:
+            context['article_count'] = Article.objects.all().count()
+        else:
+            context['article_count'] = Article.objects.published().count()
         return context
 
 
