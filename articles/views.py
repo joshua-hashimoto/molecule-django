@@ -66,7 +66,7 @@ class ArticleListView(ListView):
         """
         context = super().get_context_data(**kwargs)
         context["filter"] = self.form_class(self.request.GET or None)
-        context['article_count'] = Article.objects.all().count()
+        context['article_count'] = Article.objects.published().count()
         return context
 
 
