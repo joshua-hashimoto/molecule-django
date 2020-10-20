@@ -65,11 +65,8 @@ class ArticleListView(ListView):
         Override get_context_data to add data to pass to template.
         """
         context = super().get_context_data(**kwargs)
-        context["filter"] = self.form_class(self.request.GET or None)
-        if self.request.user.is_authenticated:
-            context['article_count'] = Article.objects.all().count()
-        else:
-            context['article_count'] = Article.objects.published().count()
+        context['filter'] = self.form_class(self.request.GET or None)
+        context['article_count'] = self.get_queryset().count()
         return context
 
 
