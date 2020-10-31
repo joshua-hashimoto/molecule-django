@@ -19,7 +19,7 @@ MARTOR_UPLOAD_URL = '/api/uploader/'  # change to local uploader
 # 100MB 104857600
 # 250MB - 214958080
 # 500MB - 429916160
-MAX_IMAGE_UPLOAD_SIZE = 10485760
+MAX_IMAGE_UPLOAD_SIZE = 214958080
 MARTOR_MARKDOWN_EXTENSIONS = [
     'markdown.extensions.extra',  # code
     'markdown.extensions.nl2br',  # new line
