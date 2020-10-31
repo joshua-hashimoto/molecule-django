@@ -21,21 +21,19 @@ MARTOR_UPLOAD_URL = '/api/uploader/'  # change to local uploader
 # 500MB - 429916160
 MAX_IMAGE_UPLOAD_SIZE = 10485760
 MARTOR_MARKDOWN_EXTENSIONS = [
-    # default extensions.
     'markdown.extensions.extra',  # code
     'markdown.extensions.nl2br',  # new line
     'markdown.extensions.smarty',
     'markdown.extensions.fenced_code',
-    # Custom markdown extensions for martor.
+    'markdown.extensions.toc',  # TOC
+    'markdown.extensions.tables',  # table
+    'markdown.extensions.codehilite',  # code line highlight
+    # Custom markdown extensions.
     'martor.extensions.urlize',
     'martor.extensions.del_ins',      # ~~strikethrough~~ and ++underscores++
     'martor.extensions.mention',      # to parse markdown mention
     'martor.extensions.emoji',        # to parse markdown emoji
     'martor.extensions.mdx_video',    # to parse embed/iframe video
     'martor.extensions.escape_html',  # to handle the XSS vulnerabilities
-    # added extensions.
-    'markdown.extensions.toc',  # TOC
-    'markdown.extensions.tables',  # table
-    'markdown.extensions.codehilite',  # code line highlight
 ]
 MARTOR_THEME = 'bootstrap'
