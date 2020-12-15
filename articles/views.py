@@ -113,6 +113,10 @@ class ArticleCreateView(AccessPermissionToUsers, CreateView):
         Override to set current login user to user field in model.
         """
         form.instance.author = self.request.user
+        # TODO: add a logic to prevent publishing the article if there is a specific charactor in content
+        # Step1. check if form.instance.content contains a specific charactor.
+        # Step2. if True, set None to form.instance.publish_at
+        # NOTE: need to decide the specific charactor to trigger this logic
         return super().form_valid(form)
 
 
@@ -137,6 +141,13 @@ class ArticleUpdateView(AccessPermissionToUsers, UpdateView):
         Override to set current login user to user field in model.
         """
         form.instance.author = self.request.user
+        # TODO: add a logic to prevent publishing the article if there is a specific charactor in content
+        # Step1. check if form.instance.content contains a specific charactor.
+        # Step2. if True, save the content and raise an error so it won't be published
+        # NOTE: need to decide the specific charactor to trigger this logic
+        # NOTE: because this is the edit view, if content contains the specific charactor
+        #       it should not be save. Need to test if raising an error will redo the change in content
+        # TODO: check if raising form error will redo the changes in form
         return super().form_valid(form)
 
     def get_success_url(self):
