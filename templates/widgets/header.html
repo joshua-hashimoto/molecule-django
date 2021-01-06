@@ -21,6 +21,14 @@
                         <div class="uk-navbar-dropdown">
                             <ul class="uk-nav uk-navbar-dropdown-nav">
                                 <li>
+                                    <a class="uk-text-uppercase" href="{% url 'admin:index' %}">
+                                        <span>
+                                            <i class="fas fa-user-cog"></i>
+                                        </span>
+                                        to admin
+                                    </a>
+                                </li>
+                                <li>
                                     <a class="uk-text-uppercase" href="{% url 'articles:article_new' %}">
                                         <span>
                                             <i class="fas fa-plus"></i>
