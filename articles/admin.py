@@ -21,14 +21,14 @@ class ArticleAdmin(admin.ModelAdmin):
     """
 
     list_display = [
-        'identifier',
         'title',
+        'identifier',
         'truncated_description',
         'is_published',
         'is_active',
     ]
     list_display_links = [
-        'identifier',
+        'title',
     ]
     list_filter = [
         'title',
@@ -92,10 +92,11 @@ class ArticleAdmin(admin.ModelAdmin):
             datetime|str: publish status.
         """
         if (publish_at := obj.publish_at):
+            formated_date = publish_at.strftime('%Y/%m/%d %H:%M')
             now = timezone.now()
             if now > publish_at:
-                return 'published'
-            return publish_at
+                return formated_date
+            return f'publish at {formated_date}'
         return 'no publish date'
 
     is_published.short_description = 'publish status'

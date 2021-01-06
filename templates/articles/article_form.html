@@ -91,7 +91,6 @@
                                     <div>
                                         {{ tag.tag }}
                                         <label
-                                            class="uk-text-truncate"
                                             for="{{ tag.id_for_label }}">
                                             {{ tag.choice_label }}
                                         </label>
@@ -175,6 +174,7 @@
 <script src="{% static 'js/filterTags.js' %}"></script>
 <script src="{% static 'js/filterRelatedArticles.js' %}"></script>
 <script>
+// tag filter
 const getCookie = (str) =>{
     if (document.cookie && document.cookie !== '') {
         for (const cookie of document.cookie.split(';')){
@@ -233,7 +233,6 @@ $('#tag-ajax-new').on('submit', event => {
                 id: `id_tags_${tagLiCount}`,
             }).prop('checked', true);
             const tagLabel = $('<label>', {
-                class: 'uk-text-truncate',
                 text: `${response.name}`,
                 for: `id_tags_${tagLiCount}`,
             });

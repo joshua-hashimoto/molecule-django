@@ -1,7 +1,7 @@
 /**
- * Name         : Martor v1.5.0
+ * Name         : Martor v1.5.6
  * Created by   : Agus Makmun (Summon Agus)
- * Release date : 12-Apr-2020
+ * Release date : 16-Sep-2020
  * License      : GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
  * Repository   : https://github.com/agusmakmun/django-markdown-editor
 **/
@@ -62,50 +62,54 @@
                 getCompletions: function(editor, session, pos, prefix, callback) {
                     var wordList = typeof(emojis) != "undefined" ? emojis : []; // from `atwho/emojis.min.js`
                     var obj = editor.getSession().getTokenAt(pos.row, pos.column.count);
-                    var curTokens = obj.value.split(/\s+/);
-                    var lastToken = curTokens[curTokens.length-1];
+                    if(typeof(obj.value) != "undefined") {
+                        var curTokens = obj.value.split(/\s+/);
+                        var lastToken = curTokens[curTokens.length-1];
 
-                    if (lastToken[0] == ':') {
-                      callback(null, wordList.map(function(word) {
-                          return {
-                              caption: word,
-                              value: word.replace(':', '') + ' ',
-                              meta: 'emoji' // this should return as text only.
-                          };
-                      }));
+                        if (lastToken[0] == ':') {
+                          callback(null, wordList.map(function(word) {
+                              return {
+                                  caption: word,
+                                  value: word.replace(':', '') + ' ',
+                                  meta: 'emoji' // this should return as text only.
+                              };
+                          }));
+                        }
                     }
                 }
             }
             var mentionWordCompleter = {
                 getCompletions: function(editor, session, pos, prefix, callback) {
                     var obj = editor.getSession().getTokenAt(pos.row, pos.column.count);
-                    var curTokens = obj.value.split(/\s+/);
-                    var lastToken = curTokens[curTokens.length-1];
+                    if(typeof(obj.value) != "undefined") {
+                        var curTokens = obj.value.split(/\s+/);
+                        var lastToken = curTokens[curTokens.length-1];
 
-                    if (lastToken[0] == '@' && lastToken[1] == '[') {
-                        username = lastToken.replace(/([\@\[/\]/])/g, '');
-                        $.ajax({
-                            url: textareaId.data('search-users-url'),
-                            data: {
-                                'username': username,
-                                'csrfmiddlewaretoken': getCookie('csrftoken')
-                            },
-                            success: function(data) {
-                                if (data['status'] == 200) {
-                                    var wordList = [];
-                                    for (var i = 0; i < data['data'].length; i++) {
-                                        wordList.push(data['data'][i].username)
+                        if (lastToken[0] == '@' && lastToken[1] == '[') {
+                            username = lastToken.replace(/([\@\[/\]/])/g, '');
+                            $.ajax({
+                                url: textareaId.data('search-users-url'),
+                                data: {
+                                    'username': username,
+                                    'csrfmiddlewaretoken': getCookie('csrftoken')
+                                },
+                                success: function(data) {
+                                    if (data['status'] == 200) {
+                                        var wordList = [];
+                                        for (var i = 0; i < data['data'].length; i++) {
+                                            wordList.push(data['data'][i].username)
+                                        }
+                                        callback(null, wordList.map(function(word) {
+                                            return {
+                                                caption: word,
+                                                value: word,
+                                                meta: 'username' // this should return as text only.
+                                            };
+                                        }));
                                     }
-                                    callback(null, wordList.map(function(word) {
-                                        return {
-                                            caption: word,
-                                            value: word,
-                                            meta: 'username' // this should return as text only.
-                                        };
-                                    }));
-                                }
-                            }// end success
-                        });
+                                }// end success
+                            });
+                        }
                     }
                 }
             }
@@ -140,8 +144,8 @@
             });
 
             // update the preview if this menu is clicked
-            var currentTab = $('.tab.segment[data-tab=preview-tab-'+field_name+']');
-            var previewTabButton = $('.item[data-tab=preview-tab-'+field_name+']');
+            var currentTab = $('.tab-pane#nav-preview-'+field_name);
+            var previewTabButton = $('.nav-link#nav-preview-tab-'+field_name);
             var refreshPreview = function() {
                 var value = textareaId.val();
                 var form = new FormData();
@@ -176,7 +180,9 @@
             };
 
             // Refresh the preview unconditionally on first load.
-            refreshPreview();
+            window.onload = function() {
+              refreshPreview();
+            };
 
             if (editorConfig.living !== 'true') {
               previewTabButton.click(function(){
@@ -188,7 +194,7 @@
               editor.on('change', refreshPreview);
             }
 
-            var editorTabButton = $('.item[data-tab=editor-tab-'+field_name+']');
+            var editorTabButton = $('.nav-link#nav-preview-tab-'+field_name);
             editorTabButton.click(function(){
                 // show the `.martor-toolbar` for this current editor if under preview.
                 $(this).closest('.tab-martor-menu').find('.martor-toolbar').show();
@@ -462,7 +468,7 @@
                   editor.focus();
                   editor.selection.moveTo(
                       originalRange.end.row,
-                      originalRange.end.column+10
+                      originalRange.end.column+11
                   );
                 }
             };
@@ -483,7 +489,7 @@
                         editor.focus();
                         editor.selection.moveTo(
                             originalRange.end.row,
-                            originalRange.end.column+11
+                            originalRange.end.column+12
                         );
                     }
                 }else { // this if use image upload to imgur.
@@ -771,10 +777,6 @@
                 $('.modal-help-guide[data-field-name='+field_name+']').modal('show');
             });
 
-            // Handle tabs.
-            mainMartor.find('.ui.martor-toolbar .ui.dropdown').dropdown();
-            mainMartor.find('.ui.tab-martor-menu .item').tab();
-
             // Toggle editor, preview, maximize
             var martorField       = $('.martor-field-'+field_name);
             var btnToggleMaximize = $('.markdown-toggle-maximize[data-field-name='+field_name+']');
@@ -783,7 +785,8 @@
             var handleToggleMinimize = function() {
                 $(document.body).removeClass('overflow');
                 $(this).attr({'title': 'Full Screen'});
-                $(this).find('.minimize.icon').removeClass('minimize').addClass('maximize');
+                $(this).find('svg.bi-arrows-angle-expand').show();
+                $(this).find('svg.bi-arrows-angle-contract').hide();
                 $('.main-martor-fullscreen').find('.martor-preview').removeAttr('style');
                 mainMartor.removeClass('main-martor-fullscreen');
                 martorField.removeAttr('style');
@@ -791,7 +794,8 @@
             }
             var handleToggleMaximize = function(selector) {
                 selector.attr({'title': 'Minimize'});
-                selector.find('.maximize.icon').removeClass('maximize').addClass('minimize');
+                selector.find('svg.bi-arrows-angle-expand').hide();
+                selector.find('svg.bi-arrows-angle-contract').show();
                 mainMartor.addClass('main-martor-fullscreen');
 
                 var clientHeight = document.body.clientHeight-90;
@@ -811,7 +815,7 @@
             // Exit full screen when `ESC` is pressed.
             $(document).keyup(function(e) {
               if (e.keyCode == 27 && mainMartor.hasClass('main-martor-fullscreen')) {
-                $('.minimize.icon').trigger('click');
+                btnToggleMaximize.trigger('click');
               }
             });
 
@@ -825,25 +829,25 @@
                 // setup initial loader
                 segmentEmoji.html('');
                 loaderInit.show();
-                modalEmoji.modal({
-                    onVisible: function () {
-                        for (var i = 0; i < emojiList.length; i++) {
-                            var linkEmoji = textareaId.data('base-emoji-url') + emojiList[i].replace(/:/g, '') + '.png';
-                            segmentEmoji.append(''
-                                +'<div class="four wide column">'
-                                + '<p><a data-emoji-target="'+emojiList[i]+'" class="insert-emoji">'
-                                + '<img class="marked-emoji" src="'+linkEmoji+'"> '+emojiList[i]
-                                + '</a></p>'
-                                +'</div>');
-                            $('a[data-emoji-target="'+emojiList[i]+'"]').click(function(){
-                                markdownToEmoji(editor, $(this).data('emoji-target'));
-                                modalEmoji.modal('hide', 100);
-                            });
-                        }
-                        loaderInit.hide();
-                        modalEmoji.modal('refresh');
-                    }
-                }).modal('show');
+                modalEmoji.show();
+
+                for (var i = 0; i < emojiList.length; i++) {
+                    var linkEmoji = textareaId.data('base-emoji-url') + emojiList[i].replace(/:/g, '') + '.png';
+                    segmentEmoji.append(''
+                        +'<div class="col-md-4">'
+                        + '<p><a data-emoji-target="'+emojiList[i]+'" class="insert-emoji">'
+                        + '<img class="marked-emoji" src="'+linkEmoji+'"> '+emojiList[i]
+                        + '</a></p>'
+                        +'</div>');
+                    $('a[data-emoji-target="'+emojiList[i]+'"]').click(function(){
+                        markdownToEmoji(editor, $(this).data('emoji-target'));
+                        modalEmoji.modal('hide');
+                    });
+                }
+
+                loaderInit.hide();
+                segmentEmoji.show();
+                modalEmoji.modal('handleUpdate');
             });
 
             // Set initial value if has the content before.

@@ -1,4 +1,3 @@
-from django.conf import settings
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.db.models import Q
@@ -8,7 +7,7 @@ from django.utils import timezone
 
 from cloudinary_storage.storage import VideoMediaCloudinaryStorage, MediaCloudinaryStorage
 from cloudinary_storage.validators import validate_video
-from markdown import markdown
+from martor.utils import markdownify
 from martor.models import MartorField
 from bs4 import BeautifulSoup
 
@@ -69,6 +68,15 @@ class ArticleQuerySet(models.QuerySet):
         queryset = self.filter(lookup)
         return queryset
 
+    def all_related(self):
+        """
+        fetch all article except the article that is tagged with tag 'Series'
+
+        Returns:
+            queryset: return all article except the article tagged with 'Series'
+        """
+        return self.published().exclude(tags__name='Series').order_by('publish_at')
+
 
 class ArticleManager(models.Manager):
     """
@@ -118,6 +126,15 @@ class ArticleManager(models.Manager):
         if query is None:
             return self.get_queryset().none()
         return self.get_queryset().search(query)
+
+    def all_related(self):
+        """
+        call .all_related() from ArticleQuerySet
+
+        Returns:
+            queryset: return queryset returned from ArticleQuerySet.all_related()
+        """
+        return self.get_queryset().all_related()
 
 
 def upload_image_to(instance, filename):
@@ -215,7 +232,7 @@ class Article(CoreModel):
             str: string of safe html
         """
         content = self.content
-        markdown_content = markdown(content)
+        markdown_content = markdownify(content)
         return mark_safe(markdown_content)
 
     def get_description(self):
@@ -239,7 +256,7 @@ class Article(CoreModel):
             int: length of the string after sanitized by BeautifulSoup4
         """
         content = self.content
-        markdown_content = markdown(content)
+        markdown_content = markdownify(content)
         souped = BeautifulSoup(markdown_content, features="html.parser").findAll(
             text=True
         )
@@ -255,8 +272,18 @@ class Article(CoreModel):
             int: length of the images after filtering through using BeautifulSoup4
         """
         content = self.content
-        markdown_content = markdown(content)
+        markdown_content = markdownify(content)
         img_tags = BeautifulSoup(markdown_content, features="html.parser").find_all(
             "img"
         )
         return len(img_tags)
+
+    @property
+    def is_series_summary(self):
+        return 'Series' in [tag.name for tag in self.tags.all()]
+
+    @property
+    def is_published(self):
+        if self.publish_at is None:
+            return False
+        return timezone.now() > self.publish_at

@@ -138,3 +138,6 @@ docker-compose.prod.yml
 
 # third party
 maintenance_mode_state.txt
+
+# other
+*.sh

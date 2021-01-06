@@ -24,7 +24,17 @@ services:
     web:
         build: .
         command: gunicorn core.wsgi -b 0.0.0.0:8000 # gunicorn対応
-        env_file: .env
+        environment: 
+            APPLICATION_NAME: molecule-django
+            ENVIRONMENT: development
+            SECRET_KEY:
+            DEBUG: 1
+            CLOUDINARY_NAME:
+            CLOUDINARY_API_KEY:
+            CLOUDINARY_API_SECRET:
+            EMAIL_HOST_USER:
+            EMAIL_HOST_PASSWORD:
+            EMAIL_BACKEND: console
         volumes:
             - .:/app
         ports:

@@ -1,7 +1,7 @@
 /**
- * Name         : Martor v1.4.8
+ * Name         : Martor v1.5.6
  * Created by   : Agus Makmun (Summon Agus)
- * Release date : 18-Mar-2020
+ * Release date : 16-Sep-2020
  * License      : GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
  * Repository   : https://github.com/agusmakmun/django-markdown-editor
 **/
@@ -59,50 +59,54 @@
                 getCompletions: function(editor, session, pos, prefix, callback) {
                     var wordList = typeof(emojis) != "undefined" ? emojis : [];
                     var obj = editor.getSession().getTokenAt(pos.row, pos.column.count);
-                    var curTokens = obj.value.split(/\s+/);
-                    var lastToken = curTokens[curTokens.length-1];
+                    if(typeof(obj.value) != "undefined") {
+                        var curTokens = obj.value.split(/\s+/);
+                        var lastToken = curTokens[curTokens.length-1];
 
-                    if (lastToken[0] == ':') {
-                      callback(null, wordList.map(function(word) {
-                          return {
-                              caption: word,
-                              value: word.replace(':', '') + ' ',
-                              meta: 'emoji'
-                          };
-                      }));
+                        if (lastToken[0] == ':') {
+                          callback(null, wordList.map(function(word) {
+                              return {
+                                  caption: word,
+                                  value: word.replace(':', '') + ' ',
+                                  meta: 'emoji'
+                              };
+                          }));
+                        }
                     }
                 }
             }
             var mentionWordCompleter = {
                 getCompletions: function(editor, session, pos, prefix, callback) {
                     var obj = editor.getSession().getTokenAt(pos.row, pos.column.count);
-                    var curTokens = obj.value.split(/\s+/);
-                    var lastToken = curTokens[curTokens.length-1];
+                    if(typeof(obj.value) != "undefined") {
+                        var curTokens = obj.value.split(/\s+/);
+                        var lastToken = curTokens[curTokens.length-1];
 
-                    if (lastToken[0] == '@' && lastToken[1] == '[') {
-                        username = lastToken.replace(/([\@\[/\]/])/g, '');
-                        $.ajax({
-                            url: textareaId.data('search-users-url'),
-                            data: {
-                                'username': username,
-                                'csrfmiddlewaretoken': getCookie('csrftoken')
-                            },
-                            success: function(data) {
-                                if (data['status'] == 200) {
-                                    var wordList = [];
-                                    for (var i = 0; i < data['data'].length; i++) {
-                                        wordList.push(data['data'][i].username)
+                        if (lastToken[0] == '@' && lastToken[1] == '[') {
+                            username = lastToken.replace(/([\@\[/\]/])/g, '');
+                            $.ajax({
+                                url: textareaId.data('search-users-url'),
+                                data: {
+                                    'username': username,
+                                    'csrfmiddlewaretoken': getCookie('csrftoken')
+                                },
+                                success: function(data) {
+                                    if (data['status'] == 200) {
+                                        var wordList = [];
+                                        for (var i = 0; i < data['data'].length; i++) {
+                                            wordList.push(data['data'][i].username)
+                                        }
+                                        callback(null, wordList.map(function(word) {
+                                            return {
+                                                caption: word,
+                                                value: word,
+                                                meta: 'username'
+                                            };
+                                        }));
                                     }
-                                    callback(null, wordList.map(function(word) {
-                                        return {
-                                            caption: word,
-                                            value: word,
-                                            meta: 'username'
-                                        };
-                                    }));
                                 }
-                            }
-                        });
+                            });
+                        }
                     }
                 }
             }
@@ -132,8 +136,8 @@
                 }
             });
 
-            var currentTab = $('.tab.segment[data-tab=preview-tab-'+field_name+']');
-            var previewTabButton = $('.item[data-tab=preview-tab-'+field_name+']');
+            var currentTab = $('.tab-pane#nav-preview-'+field_name);
+            var previewTabButton = $('.nav-link#nav-preview-tab-'+field_name);
             var refreshPreview = function() {
                 var value = textareaId.val();
                 var form = new FormData();
@@ -150,7 +154,6 @@
                     success: function(response) {
                         if (response) {
                             currentTab.html(response).removeClass('martor-preview-stale');
-
                             $(document).trigger('martor:preview', [currentTab]);
 
                             if (editorConfig.hljs == 'true') {
@@ -168,7 +171,9 @@
                 });
             };
 
-            refreshPreview();
+            window.onload = function() {
+              refreshPreview();
+            };
 
             if (editorConfig.living !== 'true') {
               previewTabButton.click(function(){
@@ -179,7 +184,7 @@
               editor.on('change', refreshPreview);
             }
 
-            var editorTabButton = $('.item[data-tab=editor-tab-'+field_name+']');
+            var editorTabButton = $('.nav-link#nav-preview-tab-'+field_name);
             editorTabButton.click(function(){
                 $(this).closest('.tab-martor-menu').find('.martor-toolbar').show();
             });
@@ -208,7 +213,6 @@
                   editor.selection.setSelectionRange(originalRange);
                 }
             };
-
             var markdownToItalic = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -225,7 +229,6 @@
                   editor.selection.setSelectionRange(originalRange);
                 }
             };
-
             var markdownToUnderscores = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -242,7 +245,6 @@
                   editor.selection.setSelectionRange(originalRange);
                 }
             };
-
             var markdownToStrikethrough = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -259,7 +261,6 @@
                   editor.selection.setSelectionRange(originalRange);
                 }
             };
-
             var markdownToHorizontal = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -279,7 +280,6 @@
                   );
                 }
             };
-
             var markdownToH1 = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -299,7 +299,6 @@
                   );
                 }
             };
-
             var markdownToH2 = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -319,7 +318,6 @@
                   );
                 }
             };
-
             var markdownToH3 = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -339,7 +337,6 @@
                   );
                 }
             };
-
             var markdownToPre = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -359,7 +356,6 @@
                   );
                 }
             };
-
             var markdownToCode = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -376,7 +372,6 @@
                   editor.selection.setSelectionRange(originalRange);
                 }
             };
-
             var markdownToBlockQuote = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -396,7 +391,6 @@
                   );
                 }
             };
-
             var markdownToUnorderedList = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -416,7 +410,6 @@
                   );
                 }
             };
-
             var markdownToOrderedList = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -436,42 +429,40 @@
                   );
                 }
             };
-
             var markdownToLink = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
                     var curpos = editor.getCursorPosition();
-                    editor.session.insert(curpos, ' [](http://) ');
+                    editor.session.insert(curpos, ' [](https://) ');
                     editor.focus();
                     editor.selection.moveTo(curpos.row, curpos.column+2);
                 }else {
                   var range = editor.getSelectionRange();
                   var text = editor.session.getTextRange(range);
-                  editor.session.replace(range, '['+text+'](http://) ');
+                  editor.session.replace(range, '['+text+'](https://) ');
                   editor.focus();
                   editor.selection.moveTo(
                       originalRange.end.row,
-                      originalRange.end.column+10
+                      originalRange.end.column+11
                   );
                 }
             };
-
             var markdownToImageLink = function(editor, imageData) {
                 var originalRange = editor.getSelectionRange();
                 if (typeof(imageData) === 'undefined') {
                     if (editor.selection.isEmpty()) {
                         var curpos = editor.getCursorPosition();
-                        editor.session.insert(curpos, ' ![](http://) ');
+                        editor.session.insert(curpos, ' ![](https://) ');
                         editor.focus();
                         editor.selection.moveTo(curpos.row, curpos.column+3);
                     }else {
                         var range = editor.getSelectionRange();
                         var text = editor.session.getTextRange(range);
-                        editor.session.replace(range, '!['+text+'](http://) ');
+                        editor.session.replace(range, '!['+text+'](https://) ');
                         editor.focus();
                         editor.selection.moveTo(
                             originalRange.end.row,
-                            originalRange.end.column+11
+                            originalRange.end.column+12
                         );
                     }
                 }else {
@@ -484,7 +475,6 @@
                   );
                 }
             };
-
             var markdownToMention = function(editor) {
                 var originalRange = editor.getSelectionRange();
                 if (editor.selection.isEmpty()) {
@@ -503,14 +493,12 @@
                   )
                 }
             };
-
             var markdownToEmoji = function(editor, data_target) {
                 var curpos = editor.getCursorPosition();
                 editor.session.insert(curpos, ' '+data_target+' ');
                 editor.focus();
                 editor.selection.moveTo(curpos.row, curpos.column+data_target.length+2);
             };
-
             var markdownToUploadImage = function(editor) {
                 var firstForm = $('#'+editorId).closest('form').get(0);
                 var field_name = editor.container.id.replace('martor-', '');
@@ -753,16 +741,14 @@
                 $('.modal-help-guide[data-field-name='+field_name+']').modal('show');
             });
 
-            mainMartor.find('.ui.martor-toolbar .ui.dropdown').dropdown();
-            mainMartor.find('.ui.tab-martor-menu .item').tab();
-
             var martorField       = $('.martor-field-'+field_name);
             var btnToggleMaximize = $('.markdown-toggle-maximize[data-field-name='+field_name+']');
 
             var handleToggleMinimize = function() {
                 $(document.body).removeClass('overflow');
                 $(this).attr({'title': 'Full Screen'});
-                $(this).find('.minimize.icon').removeClass('minimize').addClass('maximize');
+                $(this).find('svg.bi-arrows-angle-expand').show();
+                $(this).find('svg.bi-arrows-angle-contract').hide();
                 $('.main-martor-fullscreen').find('.martor-preview').removeAttr('style');
                 mainMartor.removeClass('main-martor-fullscreen');
                 martorField.removeAttr('style');
@@ -770,7 +756,8 @@
             }
             var handleToggleMaximize = function(selector) {
                 selector.attr({'title': 'Minimize'});
-                selector.find('.maximize.icon').removeClass('maximize').addClass('minimize');
+                selector.find('svg.bi-arrows-angle-expand').hide();
+                selector.find('svg.bi-arrows-angle-contract').show();
                 mainMartor.addClass('main-martor-fullscreen');
 
                 var clientHeight = document.body.clientHeight-90;
@@ -789,7 +776,7 @@
 
             $(document).keyup(function(e) {
               if (e.keyCode == 27 && mainMartor.hasClass('main-martor-fullscreen')) {
-                $('.minimize.icon').trigger('click');
+                btnToggleMaximize.trigger('click');
               }
             });
 
@@ -801,25 +788,25 @@
 
                 segmentEmoji.html('');
                 loaderInit.show();
-                modalEmoji.modal({
-                    onVisible: function () {
-                        for (var i = 0; i < emojiList.length; i++) {
-                            var linkEmoji = textareaId.data('base-emoji-url') + emojiList[i].replace(/:/g, '') + '.png';
-                            segmentEmoji.append(''
-                                +'<div class="four wide column">'
-                                + '<p><a data-emoji-target="'+emojiList[i]+'" class="insert-emoji">'
-                                + '<img class="marked-emoji" src="'+linkEmoji+'"> '+emojiList[i]
-                                + '</a></p>'
-                                +'</div>');
-                            $('a[data-emoji-target="'+emojiList[i]+'"]').click(function(){
-                                markdownToEmoji(editor, $(this).data('emoji-target'));
-                                modalEmoji.modal('hide', 100);
-                            });
-                        }
-                        loaderInit.hide();
-                        modalEmoji.modal('refresh');
-                    }
-                }).modal('show');
+                modalEmoji.show();
+
+                for (var i = 0; i < emojiList.length; i++) {
+                    var linkEmoji = textareaId.data('base-emoji-url') + emojiList[i].replace(/:/g, '') + '.png';
+                    segmentEmoji.append(''
+                        +'<div class="col-md-4">'
+                        + '<p><a data-emoji-target="'+emojiList[i]+'" class="insert-emoji">'
+                        + '<img class="marked-emoji" src="'+linkEmoji+'"> '+emojiList[i]
+                        + '</a></p>'
+                        +'</div>');
+                    $('a[data-emoji-target="'+emojiList[i]+'"]').click(function(){
+                        markdownToEmoji(editor, $(this).data('emoji-target'));
+                        modalEmoji.modal('hide');
+                    });
+                }
+
+                loaderInit.hide();
+                segmentEmoji.show();
+                modalEmoji.modal('handleUpdate');
             });
 
             if (textareaId.val() != '') {
