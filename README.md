@@ -6,6 +6,10 @@ A Django Project to make blog application Molecule
 
 [TOC]
 
+## NOTE
+
+- &#x26a0;Custom search method for Article is using the Q object wrongly.
+
 ## deploy
 
 This project is uploaded to Heroku.
